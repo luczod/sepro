@@ -8,7 +8,7 @@ import { AxiosError } from "axios";
 import { ErrorRequest } from "../../utils/MsgFlash";
 import { handleDownloadExcel } from "../../components/DownExcel";
 import { ISOtoDateBr } from "../../utils/sortDate";
-import { FaFileArrowDown } from "react-icons/fa6";
+import { FaFileArrowDown, FaBuildingColumns } from "react-icons/fa6";
 import { Alignment } from "react-data-table-component";
 
 //types
@@ -17,10 +17,11 @@ import { IDataCustumers } from "../../utils/interfaces";
 //compoennts
 import SubHeader from "../../components/InputCustumors";
 import DataTableBase from "../../components/DataTableBox";
-import BasicModalEdit from "../../components/CustomEdit";
-import BasicModalDelete from "../../components/CustomDel";
-import BasicModalAdd from "../../components/CustomAdd";
-import BasicModalSepro from "../../components/CustomSepro";
+import ModalEdit from "../../components/CustomEdit";
+import ModalDelete from "../../components/CustomDel";
+import ModalAdd from "../../components/CustomAdd";
+import ModalSepro from "../../components/CustomSepro";
+import ModalInMass from "../../components/CustomInMass";
 
 // toLocaleTimeString("pt-BR");
 
@@ -63,9 +64,9 @@ const columnsTop = [
   {
     cell: (row: IDataCustumers) => (
       <>
-        <BasicModalEdit {...row} />
-        <BasicModalDelete {...row} />
-        {row.cpf ? <BasicModalSepro {...row} /> : null}
+        <ModalEdit {...row} />
+        <ModalDelete {...row} />
+        {row.cpf ? <ModalSepro {...row} /> : null}
       </>
     ),
     right: true,
@@ -130,12 +131,13 @@ export default function PageCustomers() {
               <FaFileArrowDown color="Green" />
             </button>
           </Tooltip>
+          <ModalInMass />
           <DataTableBase
             data={dataTable}
             columns={columnsTop}
             subHeader
             subHeaderAlign={Alignment.LEFT}
-            subHeaderComponent={<BasicModalAdd />}
+            subHeaderComponent={<ModalAdd />}
             highlightOnHover={true}
             progressPending={!dataTable}
           />
