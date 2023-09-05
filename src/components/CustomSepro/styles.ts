@@ -17,6 +17,7 @@ export const DivLoading = styled.div`
 
 export const DivDados = styled.div`
   max-height: calc(100vh - 40vh);
+  text-align: center;
   overflow-y: auto;
 `;
 
@@ -73,9 +74,7 @@ export const ModalDiv = {
 };
 
 export const styleModalBody = {
-  mt: 2,
-  /*  maxHeight: "calc(100vh - 20vh)", 
-    overflow: "auto", */
+  marginBottom: 0,
 };
 
 export const styleBtnClose = {

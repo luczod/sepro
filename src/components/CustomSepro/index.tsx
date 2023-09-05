@@ -5,8 +5,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Tooltip from "@mui/material/Tooltip";
+import DenseTable from "../DenseTable/intex";
 import axios, { AxiosError } from "axios";
-import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
 import { getDateLog } from "../../utils/MsgFlash";
 import {
@@ -95,6 +95,7 @@ export default function BasicModalSepro(props: IDataCustumers) {
 
     if (props.cpf.length > 10) {
       handleOpen();
+      return;
       let formated = props.cpf.replace(/\./g, "");
       formated = formated.replace(/\-/, "");
       setLoading(true);
@@ -134,6 +135,7 @@ export default function BasicModalSepro(props: IDataCustumers) {
         <Box sx={styleBox}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Consultar restituição do(a) -&nbsp;
+            <br />
             <span
               style={{
                 fontSize: "18px",
@@ -170,25 +172,7 @@ export default function BasicModalSepro(props: IDataCustumers) {
               </DivLoading>
             ) : null}
             <div id="container-Img">
-              <DivDados>
-                {dados?.map((row: IDados) => {
-                  return (
-                    <>
-                      <DivList>
-                        <h5>
-                          <strong>Código:</strong>&nbsp; {row.codigo}
-                        </h5>
-                        <h5>
-                          <strong>Descrição:</strong>&nbsp; {row.texto}
-                        </h5>
-                        <h5>
-                          Valor:<strong>Valor:</strong>&nbsp; {row.valor}
-                        </h5>
-                      </DivList>
-                    </>
-                  );
-                })}
-              </DivDados>
+              <DivDados>{dados ? <DenseTable {...dados} /> : null}</DivDados>
             </div>
             <br />
           </Typography>
