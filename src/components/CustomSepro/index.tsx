@@ -95,7 +95,6 @@ export default function BasicModalSepro(props: IDataCustumers) {
 
     if (props.cpf.length > 10) {
       handleOpen();
-      return;
       let formated = props.cpf.replace(/\./g, "");
       formated = formated.replace(/\-/, "");
       setLoading(true);

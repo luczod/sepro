@@ -11,10 +11,8 @@ const cnpj = process.env.CNPJ;
 
 export default async function handler(req: Request, res: Response) {
   const token = await GetBearerTokenSerpro();
-  // console.log(getDateLog() + token);
-  const cpfParameter = req.body.cpf;
-  console.log(cpfParameter);
-  console.log(req.body);
+  const cpf = req.body.cpf;
+  // console.log(cpf);
 
   const Config = {
     headers: {
@@ -23,10 +21,7 @@ export default async function handler(req: Request, res: Response) {
   };
 
   axios
-    .get(
-      SeproUrl + "/restituicao-pf/v1/Autorizacoes/" + cnpj + "/" + cpfParameter,
-      Config
-    )
+    .get(SeproUrl + "/restituicao-pf/v1/Autorizacoes/" + cnpj + cpf, Config)
     .then((resposta) => {
       // handle success
       ObjResposta = resposta.data;

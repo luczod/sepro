@@ -145,7 +145,6 @@ const downloadExcel = () => {
 export default function PageDashboard({ list }) {
   const [dataEntry, setdataEntry] = useState();
   const [performed, setPerformed] = useState();
-  console.log(list);
 
   const dataTableFilter = dataTable?.map((item) => {
     let disabled = false;
