@@ -17,6 +17,10 @@ export interface IDataIR {
   dataValor: string;
 }
 
+export interface IListCpf {
+  cpf: string;
+}
+
 export interface IDataService {
   service_id: string;
   name: string;

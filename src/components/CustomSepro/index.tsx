@@ -46,10 +46,10 @@ async function getDataRestituiton(AuthToken: string) {
       console.log(getDateLog() + " 74", varErr);
       if (err.message === "Unauthorized") {
         ErrorRequest("Sessão encerrada");
-        return false;
+        return null;
       } else {
         ErrorRequest(varErr?.Erro || "500 " + JSON.stringify(varErr));
-        return false;
+        return null;
       }
     });
   return querySepro;

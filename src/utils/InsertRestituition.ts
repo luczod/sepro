@@ -3,7 +3,7 @@ import { IRestituition } from "./interfaces";
 import { getDateLog } from "./MsgFlash";
 import { RsaToSting } from "./RSAfn";
 
-export default async function InsertIRA(dataSepro: IRestituition) {
+export default async function InsertIR(dataSepro: IRestituition) {
   // in sql ? means value.
   // in sql ?? means tables ou column
   const cpf = dataSepro.autorizacao.titular;

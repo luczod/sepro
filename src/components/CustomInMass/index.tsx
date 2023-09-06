@@ -1,11 +1,10 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Router from "next/router";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Tooltip from "@mui/material/Tooltip";
 import { ConfirmToast } from "../ConfirmToastBox/indext";
-import { useForm } from "react-hook-form";
+import { allCustomSeproFn } from "../../utils/InsertIRAll";
 import { FaBuildingColumns } from "react-icons/fa6";
 import { Boxstyle, DivLoading, styleModalBody } from "./styles";
 
@@ -27,11 +26,11 @@ export default function ModalInMass() {
   async function callTwoFn() {
     setLoading(true);
     handleOpen();
+    await allCustomSeproFn();
 
-    setTimeout(() => {
-      setLoading(false);
-      handleClose();
-    }, 3000);
+    setLoading(false);
+    handleClose();
+    SucessRequest("Finalizado a consulta a todos os clientes");
   }
 
   return (

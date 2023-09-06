@@ -4,7 +4,7 @@ import { SeproUrl } from "../../../utils/endpoint";
 import { getDateLog } from "../../../utils/MsgFlash";
 import { IRestituition } from "../../../utils/interfaces";
 import { GetBearerTokenSerpro } from "../../../utils/getToken";
-import InsertIRA from "../../../utils/InsertRestituition";
+import InsertIR from "../../../utils/InsertRestituition";
 // env
 let ObjResposta: IRestituition;
 
@@ -23,7 +23,7 @@ export default async function handler(req: Request, res: Response) {
     .then((resposta) => {
       // handle success
       ObjResposta = resposta.data;
-      InsertIRA(ObjResposta);
+      InsertIR(ObjResposta);
       // console.log(resposta.config);
       res.status(200).json(ObjResposta.dados);
     })
