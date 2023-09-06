@@ -73,3 +73,12 @@ export const ISODateSmall = (valueData: string) => {
 
   return formatedC;
 };
+
+export const DateTimeBr = (valueData: string) => {
+  let options: Intl.DateTimeFormatOptions = {
+    dateStyle: "short",
+    timeStyle: "medium",
+  };
+  const date = new Date(valueData);
+  return date.toLocaleString("pt-Br", options);
+};

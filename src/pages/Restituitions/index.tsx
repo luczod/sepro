@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from "react";
 import Head from "next/head";
 import router from "next/router";
 import axios from "axios";
-import "react-toastify/dist/ReactToastify.css";
+import { Alignment } from "react-data-table-component";
 import { Tooltip } from "@mui/material";
 import { AxiosError } from "axios";
 import { ErrorRequest } from "../../utils/MsgFlash";
@@ -10,6 +10,8 @@ import { handleDownloadExcel } from "../../components/DownExcel";
 import { ISOtoDateBr } from "../../utils/sortDate";
 import { FaFileArrowDown } from "react-icons/fa6";
 import { formatCPF } from "../../utils/formatNumber";
+import { DateTimeBr } from "../../utils/sortDate";
+import "react-toastify/dist/ReactToastify.css";
 
 //types
 import { IDataIR } from "../../utils/interfaces";
@@ -21,7 +23,6 @@ import BasicModalEdit from "../../components/CustomEdit";
 import BasicModalDelete from "../../components/CustomDel";
 import BasicModalAdd from "../../components/CustomAdd";
 
-import { Alignment } from "react-data-table-component";
 // toLocaleTimeString("pt-BR");
 
 const columnsTop = [
@@ -37,7 +38,7 @@ const columnsTop = [
   },
   {
     name: "Data de Registro",
-    selector: (row: IDataIR) => ISOtoDateBr(row.dateRegister),
+    selector: (row: IDataIR) => DateTimeBr(row.dateRegister),
     maxWidth: "255px",
     sortable: false,
   },
@@ -55,7 +56,7 @@ const columnsTop = [
   },
   {
     name: "Valor",
-    selector: (row: IDataIR) => row.restitution,
+    selector: (row: IDataIR) => row.dataValor,
     maxWidth: "175px",
     sortable: false,
   },

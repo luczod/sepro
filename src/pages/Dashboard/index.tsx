@@ -19,6 +19,9 @@ import {
   ISOtoDateBr,
 } from "../../utils/sortDate";
 import { formatNumber } from "../../utils/formatNumber";
+type VarError = {
+  Error?: string;
+};
 let dataTable: IDataService[] | null = null;
 
 //compoennts
@@ -205,12 +208,28 @@ export default function PageDashboard({ list }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const response = await fetch("http://localhost:3000/api/database/ListYear");
-  const data: IListYear[] = await response.json();
+  let msg: string | null = null;
+
+  const response = await axios
+    .get("http://localhost:3000/api/database/ListYear")
+    .then((result) => {
+      return result.data;
+    })
+    .catch((err) => {
+      let varErr: VarError = err.response?.data || err.cause;
+      if (err.message === "Unauthorized") {
+        msg = "Sessão encerrada";
+        return null;
+      } else {
+        msg = varErr.Error || JSON.stringify(varErr);
+        return null;
+      }
+    });
 
   return {
     props: {
-      list: data,
+      list: response,
+      errorList: msg,
     },
   };
 };

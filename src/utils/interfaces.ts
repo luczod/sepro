@@ -14,7 +14,7 @@ export interface IDataIR {
   dateRegister: string;
   dataCode: boolean;
   dataText: string;
-  restitution: string;
+  dataValor: string;
 }
 
 export interface IDataService {
