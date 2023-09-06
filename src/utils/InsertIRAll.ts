@@ -62,20 +62,18 @@ async function getDataCpf() {
 }
 
 export async function allCustomSeproFn() {
-  const listCPF = await getDataCpf();
+  const listCPF: IListCpf[] = await getDataCpf();
   /* checked if has dot and comman
     let checked = /^(?=.*?\.)(?=.*?\,)/.test(charged); */
   for (let i in listCPF) {
-    if (listCPF[i].cpf.length > 10) {
-      let formated = listCPF[i].cpf.replace(/\./g, "");
-      formated = formated.replace(/\-/, "");
-      let ResSearch = await searchToken(formated);
-      if (!ResSearch) {
-        return;
-      } else {
-        let DataSepro = await getDataRestituiton(ResSearch);
-        return;
-      }
+    let formated = listCPF[i].cpf.replace(/\./g, "");
+    formated = formated.replace(/\-/, "");
+    let ResSearch = await searchToken(formated);
+    if (!ResSearch) {
+      return;
+    } else {
+      let DataSepro = await getDataRestituiton(ResSearch);
+      return;
     }
   }
   return;

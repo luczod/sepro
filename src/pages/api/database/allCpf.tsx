@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const SQLquery = "SELECT c.cpf FROM customers c WHERE c.cpf IS NOT NULL;";
+    const SQLquery = "SELECT c.cpf FROM customers c WHERE LENGTH(c.cpf) > 10";
     const result = await runQuery(SQLquery, []);
 
     if (Array.isArray(result)) {
