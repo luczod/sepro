@@ -1,3 +1,4 @@
+require("dotenv").config();
 import { Request, Response } from "express";
 import axios, { AxiosError } from "axios";
 import { SeproUrl } from "../../../utils/endpoint";
@@ -6,6 +7,7 @@ import { IAuth } from "../../../utils/interfaces";
 import { GetBearerTokenSerpro } from "../../../utils/getToken";
 // env
 let ObjResposta: IAuth;
+const cnpj = process.env.CNPJ;
 
 export default async function handler(req: Request, res: Response) {
   const token = await GetBearerTokenSerpro();
@@ -22,9 +24,7 @@ export default async function handler(req: Request, res: Response) {
 
   axios
     .get(
-      SeproUrl +
-        "/restituicao-pf/v1/Autorizacoes/19457887000170/" +
-        cpfParameter,
+      SeproUrl + "/restituicao-pf/v1/Autorizacoes/" + cnpj + "/" + cpfParameter,
       Config
     )
     .then((resposta) => {

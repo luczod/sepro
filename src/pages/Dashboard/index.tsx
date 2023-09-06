@@ -3,7 +3,7 @@ import router from "next/router";
 import axios from "axios";
 import Head from "next/head";
 import "react-toastify/dist/ReactToastify.css";
-import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
+import type { GetServerSideProps } from "next";
 import { AxiosError } from "axios";
 import { Alignment } from "react-data-table-component";
 import { ErrorRequest } from "../../utils/MsgFlash";
@@ -12,7 +12,7 @@ import { FaFileArrowDown } from "react-icons/fa6";
 import { Tooltip } from "@mui/material";
 
 //types
-import { IDataService } from "../../utils/interfaces";
+import { IDataService, IListYear } from "../../utils/interfaces";
 import {
   convertToDate1,
   convertToDate2,
@@ -142,9 +142,10 @@ const downloadExcel = () => {
   handleDownloadExcel(dataTable, "planilha1", "clientes");
 };
 
-export default function PageDashboard() {
+export default function PageDashboard({ list }) {
   const [dataEntry, setdataEntry] = useState();
   const [performed, setPerformed] = useState();
+  console.log(list);
 
   const dataTableFilter = dataTable?.map((item) => {
     let disabled = false;
@@ -173,7 +174,7 @@ export default function PageDashboard() {
         <CardBox color="white" titulo="Restituições Efetuadas" amount={90} />
       </Content> */}
       <br />
-      <SubHeader />
+      <SubHeader listYear={list} />
       <br />
       {!!dataTable ? (
         <>
@@ -203,3 +204,14 @@ export default function PageDashboard() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const response = await fetch("http://localhost:3000/api/database/ListYear");
+  const data: IListYear[] = await response.json();
+
+  return {
+    props: {
+      list: data,
+    },
+  };
+};

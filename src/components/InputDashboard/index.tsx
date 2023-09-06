@@ -19,8 +19,7 @@ import { Input, ScrollBarBox } from "./styles";
 import { IListYear, IDataService } from "../../utils/interfaces";
 import { ErrorRequest } from "../../utils/MsgFlash";
 interface IProps {
-  links: string;
-  resDbList: IListYear[];
+  listYear: IListYear[] | any;
 }
 
 //variables
@@ -88,18 +87,18 @@ FormatListYear();
 // componente funcional "React.FC"
 // tipando o children como um node do react
 // checa o que tem entre as tags do componets
-export default function SubHeader() {
+export default function SubHeader({ listYear }: IProps) {
   const [loadbtn1, setLoadbtn1] = useState<boolean>(false);
   const [loadbtn2, setLoadbtn2] = useState<boolean>(false);
   const router = useRouter();
 
-  const [listyear, setlistYer] = useState<IListYear[]>(resDbList);
+  const [listyear, setlistYer] = useState<IListYear[]>(listYear);
   const { register, handleSubmit } = useForm();
 
-  useEffect(() => {
+  /*  useEffect(() => {
     setlistYer(resDbList);
     // console.log(resDbList);
-  }, []);
+  }, []); */
 
   async function SearchNome(data: { Nome: string }) {
     setLoadbtn1(true);
