@@ -8,7 +8,7 @@ export default async function InsertIR(dataSepro: IRestituition) {
   // in sql ?? means tables ou column
   const cpf = dataSepro.autorizacao.titular;
   const auth = dataSepro.autorizacao.token;
-  const dataRegistro = dataSepro.autorizacao.dataHoraRegistro.slice(0, 10);
+  const dataRegistro = dataSepro.autorizacao.dataHoraRegistro;
   const dados = dataSepro.dados;
   for (let i in dados) {
     const SQLAdd = `INSERT INTO restituition (customer_cpf, customer_auth, dateRegister, dataCode, dataText, restitution)
