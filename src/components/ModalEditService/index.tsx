@@ -62,7 +62,7 @@ export default function BasicModalService(props: IDataService) {
           onClick={handleOpen}
           style={{ color: "blue" }}
         >
-          <FaPen size={"1.5vh"} />
+          <FaPen size={18} />
         </Button>
       </Tooltip>
       <Modal

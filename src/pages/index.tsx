@@ -50,6 +50,7 @@ function Login() {
 
         setCookie(undefined, "token", Objtoken.token, {
           maxAge: 60 * 60 * 23.5, // 23,5 hour
+          sameSite: "strict",
         });
         router.push("/Dashboard");
       })
@@ -90,7 +91,7 @@ function Login() {
           <form className="form-login mt-5">
             <h3 className="mb-4">Controle de clientes</h3>
 
-            <div className="form-floating" style={{ marginBottom: "1.5vh" }}>
+            <div className="form-floating" style={{ marginBottom: 15 }}>
               <input
                 type="text"
                 onChange={(e) => setUser(e.target.value)}
@@ -116,7 +117,7 @@ function Login() {
             </div>
 
             <button
-              style={{ marginTop: "1.5vh" }}
+              style={{ marginTop: 15 }}
               onClick={ProcessLogin}
               className="w-100 btn btn-lg btn-primary"
               disabled={loading}

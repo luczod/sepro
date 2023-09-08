@@ -63,7 +63,7 @@ export default function BasicModalDelete(props: IDataCustumers) {
           onClick={handleOpen}
           style={{ marginLeft: 10, color: "red" }}
         >
-          <FaTrash />
+          <FaTrash size={15} />
         </Button>
       </Tooltip>
       <Modal

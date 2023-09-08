@@ -125,7 +125,7 @@ const SubHeader: React.FC<IProps> = ({ links }) => {
                 ></span>
               ) : (
                 <span>
-                  <FaSistrix size={"2vh"} />
+                  <FaSistrix size={22} />
                 </span>
               )}
             </button>

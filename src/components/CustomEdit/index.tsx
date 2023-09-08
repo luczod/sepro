@@ -82,7 +82,7 @@ export default function BasicModalEdit(props: IDataCustumers) {
           onClick={handleOpen}
           style={{ color: "blue" }}
         >
-          <FaPen />
+          <FaPen size={18} />
         </Button>
       </Tooltip>
       <Modal

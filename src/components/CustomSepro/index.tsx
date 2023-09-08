@@ -120,9 +120,9 @@ export default function BasicModalSepro(props: IDataCustumers) {
         <Button
           className="btn btn-outline-light"
           onClick={CallTwoFn}
-          style={{ color: "Green" }}
+          style={{ color: "Green", fontSize: "2.2vh" }}
         >
-          <FaMagnifyingGlassDollar size={"2.2vh"} />
+          <FaMagnifyingGlassDollar />
         </Button>
       </Tooltip>
       <Modal
@@ -137,13 +137,13 @@ export default function BasicModalSepro(props: IDataCustumers) {
             <br />
             <span
               style={{
-                fontSize: "18px",
+                fontSize: "15px",
                 fontWeight: "bold",
                 paddingRight: "5vw",
               }}
             >
               {props.name}&nbsp;
-              <FaMagnifyingGlassDollar color="Green" size={"2.2vh"} />
+              <FaMagnifyingGlassDollar color="Green" />
             </span>
             <Button
               sx={styleBtnClose}

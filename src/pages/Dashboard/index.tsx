@@ -7,7 +7,6 @@ import type { GetServerSideProps } from "next";
 import { AxiosError } from "axios";
 import { Alignment } from "react-data-table-component";
 import { ErrorRequest } from "../../utils/MsgFlash";
-import { GetListYear } from "../../components/InputDashboard";
 import { FaFileArrowDown } from "react-icons/fa6";
 import { Tooltip } from "@mui/material";
 
@@ -145,9 +144,13 @@ const downloadExcel = () => {
   handleDownloadExcel(dataTable, "planilha1", "clientes");
 };
 
-export default function PageDashboard({ list }) {
+export default function PageDashboard({ list, errorList }) {
   const [dataEntry, setdataEntry] = useState();
   const [performed, setPerformed] = useState();
+
+  if (errorList) {
+    ErrorRequest(errorList);
+  }
 
   const dataTableFilter = dataTable?.map((item) => {
     let disabled = false;

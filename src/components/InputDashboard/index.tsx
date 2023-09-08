@@ -30,22 +30,6 @@ type ErrVar = {
   code?: string;
 };
 
-export async function GetListYear() {
-  let queryAno = await axios
-    .get("/api/database/ListYear")
-    .then((resposta) => {
-      // console.log(resposta.data);
-      return resposta.data;
-    })
-    .catch((err: AxiosError) => {
-      let varErr: ErrVar = err?.response?.data || err.cause;
-      ErrorRequest(varErr.Erro || JSON.stringify(varErr));
-      return null;
-    });
-
-  return queryAno;
-}
-
 async function loadTable(nameinput: string) {
   let queryServices = await axios
     .post("/api/database/service", { nome: nameinput })
@@ -77,12 +61,6 @@ async function FilterYear(yearinput: string) {
 
   return queryServices;
 }
-
-async function FormatListYear() {
-  resDbList = await GetListYear();
-  return resDbList;
-}
-FormatListYear();
 
 // componente funcional "React.FC"
 // tipando o children como um node do react
@@ -173,7 +151,7 @@ export default function SubHeader({ listYear }: IProps) {
                 ></span>
               ) : (
                 <span>
-                  <FaSistrix size={"2vh"} />
+                  <FaSistrix size={22} />
                 </span>
               )}
             </button>
@@ -225,7 +203,7 @@ export default function SubHeader({ listYear }: IProps) {
                 ></span>
               ) : (
                 <span>
-                  <FaSistrix size={"2vh"} />
+                  <FaSistrix size={22} />
                 </span>
               )}
             </button>

@@ -77,7 +77,7 @@ function Register() {
           <form className="form-login mt-5">
             <h3 className="mb-4">Registrar usuário</h3>
 
-            <div className="form-floating" style={{ marginBottom: "1.5vh" }}>
+            <div className="form-floating" style={{ marginBottom: 15 }}>
               <input
                 type="email"
                 onChange={(e) => setNome(e.target.value)}
@@ -88,7 +88,7 @@ function Register() {
               />
               <label htmlFor="floatingInput">Nome </label>
             </div>
-            <div className="form-floating" style={{ marginBottom: "1.5vh" }}>
+            <div className="form-floating" style={{ marginBottom: 15 }}>
               <input
                 type="email"
                 onChange={(e) => setUser(e.target.value)}
@@ -98,7 +98,7 @@ function Register() {
               />
               <label htmlFor="floatingInput">Nome Usuário</label>
             </div>
-            <div className="form-floating" style={{ marginBottom: "1.5vh" }}>
+            <div className="form-floating" style={{ marginBottom: 15 }}>
               <input
                 type="password"
                 onChange={(e) => setSenha(e.target.value)}
