@@ -116,6 +116,19 @@ export default function BasicModalService(props: IDataService) {
                   </label>
                   <br />
                   <label role="label">
+                    <span>Ano</span>
+                    <div className="input-group">
+                      <InputMask
+                        {...register("onlyYear")}
+                        mask="9999"
+                        type="number"
+                        className="form-control"
+                        name="onlyYear"
+                        placeholder={"aaaa"}
+                      />
+                    </div>
+                  </label>
+                  <label role="label">
                     <span>CPF</span>
                     <div className="input-group">
                       <InputMask

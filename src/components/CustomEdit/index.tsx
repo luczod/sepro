@@ -76,9 +76,6 @@ export default function BasicModalEdit(props: IDataCustumers) {
       <Tooltip title="Editar" style={{ fontSize: "2.5vh" }}>
         <Button
           className="btn btn-outline-light"
-          // data-toggle="tooltip"
-          // data-placement="top"
-          // title="EDITAR"
           onClick={handleOpen}
           style={{ color: "blue" }}
         >

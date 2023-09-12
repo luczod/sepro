@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     const SQLquery =
-      "SELECT DISTINCT YEAR(s.date_send) AS ano  FROM services s ORDER BY YEAR(s.date_send) DESC;";
+      "SELECT DISTINCT s.onlyyear  AS ano  FROM services s ORDER BY s.onlyyear DESC;";
     const result = await runQuery(SQLquery, []);
 
     if (Array.isArray(result)) {
