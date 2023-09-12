@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     const SQLquery =
-      "SELECT c.idclientes AS cdname, c.name AS label FROM customers c ORDER BY c.name  ASC;";
+      "SELECT c.name AS label, c.cpf AS cpf FROM customers c ORDER BY c.name  ASC;";
     const result = await runQuery(SQLquery, []);
 
     if (Array.isArray(result)) {

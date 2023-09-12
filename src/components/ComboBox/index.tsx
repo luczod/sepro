@@ -1,52 +1,51 @@
 import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { GetServerSideProps } from "next/types";
 import { ErrorRequest } from "../../utils/MsgFlash";
+
+let listData: any[] | null;
 
 type VarError = {
   Error?: string;
 };
 
-export default function ComboBox({ list, errorList }) {
-  if (errorList) {
-    ErrorRequest(errorList);
-  }
+async function ListAllCustomers() {
+  let queryList = await axios
+    .get("http://localhost:3000/api/database/ListCustomers")
+    .then((resposta) => {
+      return resposta.data;
+    })
+    .catch((err: AxiosError) => {
+      let msg: VarError = err.response.data;
+      ErrorRequest(msg.Error || JSON.stringify(err.cause));
+
+      return null;
+    });
+
+  return queryList;
+}
+
+async function getAllList() {
+  listData = await ListAllCustomers();
+
+  return;
+}
+// getAllList();
+
+export default function ComboBox() {
+  const [list, setList] = React.useState<any[]>(listData);
+  React.useEffect(() => {
+    setList(listData);
+  }, []);
   return (
     <Autocomplete
       disablePortal
       id="combo-box-demo"
-      options={list}
+      options={!list ? [{ label: "Carregando...", cpf: 0 }] : list}
       sx={{ width: 300 }}
       renderInput={(params) => <TextField {...params} label="Cliente" />}
     />
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  let msg: string | null = null;
-
-  const response = await axios
-    .get("http://localhost:3000/api/database/ListCustomers")
-    .then((result) => {
-      return result.data;
-    })
-    .catch((err) => {
-      let varErr: VarError = err.response?.data || err.cause;
-      if (err.message === "Unauthorized") {
-        msg = "Sessão encerrada";
-        return null;
-      } else {
-        msg = varErr.Error || JSON.stringify(varErr);
-        return null;
-      }
-    });
-
-  return {
-    props: {
-      list: response,
-      errorList: msg,
-    },
-  };
-};

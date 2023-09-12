@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Tooltip from "@mui/material/Tooltip";
 import InputMask from "react-input-mask";
+import ComboBox from "../ComboBox";
 import axios, { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { ErrorRequest, SucessRequest } from "../../utils/MsgFlash";
@@ -17,9 +18,12 @@ import { ISODateSmall } from "../../utils/sortDate";
 //iterfaces
 import { IDataService } from "../../utils/interfaces";
 import { ContainerLabel, Boxstyle } from "./styles";
+import { GetServerSideProps } from "next/types";
 type VarError = {
   Error?: string;
 };
+
+let listData: any[] | boolean;
 
 async function EditService(objInput: { name: string }) {
   console.log(objInput);
@@ -41,11 +45,40 @@ async function EditService(objInput: { name: string }) {
   return queryService;
 }
 
+async function ListAllCustomers() {
+  let queryList = await axios
+    .get("http://localhost:3000/api/database/ListCustomers")
+    .then((resposta) => {
+      return resposta.data;
+    })
+    .catch((err: AxiosError) => {
+      let msg: VarError = err.response.data;
+      ErrorRequest(msg.Error || JSON.stringify(err.cause));
+
+      return false;
+    });
+
+  return queryList;
+}
+
+async function getAllList() {
+  listData = await ListAllCustomers();
+
+  return;
+}
+getAllList();
+
 export default function BasicModalService(props: IDataService) {
   const [open, setOpen] = React.useState(false);
+  const [list, setList] = React.useState<boolean | any[]>(listData);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { register, handleSubmit } = useForm();
+  console.log(listData);
+
+  React.useEffect(() => {
+    setList(listData);
+  }, []);
 
   async function UpdateService(data: IDataService) {
     let Rescheck = await EditService(data);
@@ -115,6 +148,7 @@ export default function BasicModalService(props: IDataService) {
                       />
                     </div>
                   </label>
+                  <ComboBox />
                   <br />
                   <label role="label">
                     <span>Ano</span>
