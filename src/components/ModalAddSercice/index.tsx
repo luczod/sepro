@@ -151,7 +151,7 @@ export default function BasicModalAddService() {
                   </label>
                   <br />
                   <label role="label">
-                    <span>Observção</span>
+                    <span>Observação</span>
                     <div className="input-group">
                       <input
                         {...register("obs")}

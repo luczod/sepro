@@ -2,13 +2,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import router from "next/router";
 import axios from "axios";
 import Head from "next/head";
-import "react-toastify/dist/ReactToastify.css";
-import type { GetServerSideProps } from "next";
 import { AxiosError } from "axios";
 import { Alignment } from "react-data-table-component";
 import { ErrorRequest } from "../../utils/MsgFlash";
 import { FaFileArrowDown } from "react-icons/fa6";
 import { Tooltip } from "@mui/material";
+import { formatCPF } from "../../utils/formatNumber";
+import { GetServerSideProps } from "next/types";
+import "react-toastify/dist/ReactToastify.css";
 
 //types
 import { IDataService, IListYear } from "../../utils/interfaces";
@@ -46,7 +47,7 @@ const columnsTop = [
   },
   {
     name: "cpf",
-    selector: (row: IDataService) => row.cpf,
+    selector: (row: IDataService) => formatCPF(row.cpf),
   },
   {
     name: "Data de envio",

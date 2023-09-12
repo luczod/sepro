@@ -74,7 +74,7 @@ export default function BasicModalService(props: IDataService) {
         <Box sx={Boxstyle}>
           <form onSubmit={handleSubmit(UpdateService)}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Editar Cliente - &nbsp;
+              Editar Serviço - &nbsp;
               <FaPen color="blue" />
               <br />
               <span style={{ fontSize: "18px", fontWeight: "bold" }}>
@@ -111,6 +111,7 @@ export default function BasicModalService(props: IDataService) {
                         name="name"
                         size={48}
                         placeholder={props.name}
+                        required
                       />
                     </div>
                   </label>
@@ -121,10 +122,12 @@ export default function BasicModalService(props: IDataService) {
                       <InputMask
                         {...register("onlyYear")}
                         mask="9999"
-                        type="number"
+                        type="text"
                         className="form-control"
                         name="onlyYear"
+                        size={2}
                         placeholder={"aaaa"}
+                        required
                       />
                     </div>
                   </label>
@@ -138,6 +141,7 @@ export default function BasicModalService(props: IDataService) {
                         className="form-control"
                         name="cpf"
                         placeholder={props.cpf}
+                        required
                       />
                     </div>
                   </label>
@@ -197,7 +201,7 @@ export default function BasicModalService(props: IDataService) {
                   </label>
                   <br />
                   <label role="label">
-                    <span>Observção</span>
+                    <span>Observação</span>
                     <div className="input-group">
                       <input
                         {...register("obs")}

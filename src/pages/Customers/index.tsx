@@ -2,14 +2,15 @@ import React, { useEffect, useMemo } from "react";
 import Head from "next/head";
 import router from "next/router";
 import axios from "axios";
-import "react-toastify/dist/ReactToastify.css";
 import { Tooltip } from "@mui/material";
 import { AxiosError } from "axios";
 import { ErrorRequest } from "../../utils/MsgFlash";
 import { handleDownloadExcel } from "../../components/DownExcel";
 import { ISOtoDateBr } from "../../utils/sortDate";
 import { FaFileArrowDown, FaBuildingColumns } from "react-icons/fa6";
+import { formatCPF } from "../../utils/formatNumber";
 import { Alignment } from "react-data-table-component";
+import "react-toastify/dist/ReactToastify.css";
 
 //types
 import { IDataCustumers } from "../../utils/interfaces";
@@ -38,7 +39,7 @@ const columnsTop = [
   },
   {
     name: "CPF",
-    selector: (row: IDataCustumers) => row.cpf,
+    selector: (row: IDataCustumers) => formatCPF(row.cpf),
     style: { fontWeight: "bold" },
     maxWidth: "165px",
     sortable: false,
