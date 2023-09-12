@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { runQuery } from "../../../utils/db";
+import { fnRawCPF } from "../../../utils/formatNumber";
 
 export default async function handler(
   req: NextApiRequest,
@@ -20,9 +21,9 @@ export default async function handler(
   }
 
   if (!!req.body.cpf) {
-    const Cpf = req.body.cpf;
+    const cpf = fnRawCPF(req.body.cpf);
     const SQLCpf = `update services set cpf = ? WHERE service_id = ${Id}`;
-    const result = await runQuery(SQLCpf, [Cpf]);
+    const result = await runQuery(SQLCpf, [cpf]);
     if (typeof result === "object") {
       console.log(result);
       res.status(200).end();

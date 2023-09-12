@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { runQuery } from "../../../utils/db";
+import { fnRawCPF } from "../../../utils/formatNumber";
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,7 +9,9 @@ export default async function handler(
   const Id = req.body.Id;
 
   if (!!req.body.cpf) {
-    const cpf = req.body.cpf;
+    const cpf = fnRawCPF(req.body.cpf);
+    let formatedcpf = cpf.replace(/\./g, "");
+    formatedcpf = formatedcpf.replace(/\-/, "");
     const SQLcpf = `update customers set cpf = ? WHERE idclientes = ${Id}`;
     const result = await runQuery(SQLcpf, [cpf]);
     if (typeof result === "object") {

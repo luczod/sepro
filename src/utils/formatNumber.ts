@@ -26,3 +26,10 @@ export const formatCPF = (CPFinput: string): string => {
 
   return formatedB;
 };
+
+export function fnRawCPF(CPFinput: string) {
+  let formatedCPF = CPFinput.replace(/\./g, "");
+  formatedCPF = formatedCPF.replace(/\-/, "");
+
+  return formatedCPF;
+}
