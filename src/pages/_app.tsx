@@ -3,7 +3,6 @@ import type { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
 import { theme } from "../styles/theme";
 import { GlobalStyles } from "../styles/global-styles";
-import { AuthProvider } from "../contexts/AuthContext";
 import Layout from "../components/Layout";
 import { useRouter } from "next/router";
 
