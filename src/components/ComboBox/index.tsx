@@ -4,7 +4,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import axios, { AxiosError } from "axios";
 import { GetServerSideProps } from "next/types";
 import { ErrorRequest } from "../../utils/MsgFlash";
-
+import Link from "next/link";
 let listData: any[] | null;
 
 type VarError = {
@@ -32,18 +32,23 @@ async function getAllList() {
 
   return;
 }
-// getAllList();
+getAllList();
 
 export default function ComboBox() {
   const [list, setList] = React.useState<any[]>(listData);
-  React.useEffect(() => {
+  /*  React.useEffect(() => {
     setList(listData);
-  }, []);
+  }, []); */
   return (
     <Autocomplete
       disablePortal
-      id="combo-box-demo"
+      id="combo-box"
       options={!list ? [{ label: "Carregando...", cpf: 0 }] : list}
+      noOptionsText={
+        <>
+          Sem opções&nbsp;<Link href={"/Customers"}>Adcionar</Link>
+        </>
+      }
       sx={{ width: 300 }}
       renderInput={(params) => <TextField {...params} label="Cliente" />}
     />
