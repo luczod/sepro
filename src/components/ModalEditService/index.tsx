@@ -18,12 +18,16 @@ import { ISODateSmall } from "../../utils/sortDate";
 //iterfaces
 import { IDataService } from "../../utils/interfaces";
 import { ContainerLabel, Boxstyle } from "./styles";
-import { GetServerSideProps } from "next/types";
+
 type VarError = {
   Error?: string;
 };
 
-let listData: any[] | boolean;
+type AutoInput = {
+  label?: string;
+};
+
+let listData: any[] | null;
 
 async function EditService(objInput: { name: string }) {
   console.log(objInput);
@@ -55,7 +59,7 @@ async function ListAllCustomers() {
       let msg: VarError = err.response.data;
       ErrorRequest(msg.Error || JSON.stringify(err.cause));
 
-      return false;
+      return null;
     });
 
   return queryList;
@@ -66,19 +70,31 @@ async function getAllList() {
 
   return;
 }
-getAllList();
+// getAllList();
 
 export default function BasicModalService(props: IDataService) {
   const [open, setOpen] = React.useState(false);
-  const [list, setList] = React.useState<boolean | any[]>(listData);
+  const [list, setList] = React.useState<null | any[]>(listData);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { register, handleSubmit } = useForm();
-  console.log(listData);
 
   React.useEffect(() => {
     setList(listData);
   }, []);
+
+  function handlerChange(inputValue: any) {
+    // const valor: unknown = inputValue.target.value;
+
+    // if (valor instanceof Object) {
+    //   let ObjValor: AutoInput = valor;
+    //   console.log(ObjValor.label);
+    // } else {
+    //   console.log(valor);
+    // }
+
+    console.log(inputValue?.label);
+  }
 
   async function UpdateService(data: IDataService) {
     let Rescheck = await EditService(data);
@@ -139,7 +155,7 @@ export default function BasicModalService(props: IDataService) {
                       />
                       <input
                         {...register("name")}
-                        type="search"
+                        type="hidden"
                         className="form-control"
                         name="name"
                         size={48}
@@ -148,7 +164,8 @@ export default function BasicModalService(props: IDataService) {
                       />
                     </div>
                   </label>
-                  <ComboBox />
+                  <ComboBox isChange={(event, value) => handlerChange(value)} />
+
                   <br />
                   <label role="label">
                     <span>Ano</span>

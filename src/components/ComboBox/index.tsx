@@ -34,23 +34,32 @@ async function getAllList() {
 }
 getAllList();
 
-export default function ComboBox() {
+interface IProps {
+  // isChange?: (isChecked: React.ChangeEvent<HTMLInputElement>) => void;
+  isChange?: (event: React.SyntheticEvent<Element, Event>, value: any) => void;
+}
+
+export default function ComboBox({ isChange }: IProps) {
   const [list, setList] = React.useState<any[]>(listData);
+  console.log("estou no combo: ");
+
   /*  React.useEffect(() => {
     setList(listData);
   }, []); */
   return (
     <Autocomplete
       disablePortal
+      // onChangeCapture={isChange}
       id="combo-box"
-      options={!list ? [{ label: "Carregando...", cpf: 0 }] : list}
+      options={!list ? [{ label: "Carregando..." }] : list}
       noOptionsText={
         <>
           Sem opções&nbsp;<Link href={"/Customers"}>Adcionar</Link>
         </>
       }
-      sx={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Cliente" />}
+      sx={{ width: 500 }}
+      onChange={isChange}
+      renderInput={(params) => <TextField {...params} />}
     />
   );
 }
