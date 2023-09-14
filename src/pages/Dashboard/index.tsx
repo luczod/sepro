@@ -39,6 +39,11 @@ const columnsTop = [
     selector: (row: IDataService) => row.service_id,
     omit: true,
   },
+  {
+    name: "Ano",
+    selector: (row: IDataService) => row.onlyyear,
+    omit: true,
+  },
 
   {
     name: "Nome",

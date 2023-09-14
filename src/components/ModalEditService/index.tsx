@@ -75,6 +75,7 @@ async function getAllList() {
 export default function BasicModalService(props: IDataService) {
   const [open, setOpen] = React.useState(false);
   const [list, setList] = React.useState<null | any[]>(listData);
+  const [autoInput, setAutoInput] = React.useState<string>("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { register, handleSubmit } = useForm();
@@ -83,20 +84,26 @@ export default function BasicModalService(props: IDataService) {
     setList(listData);
   }, []);
 
-  function handlerChange(inputValue: any) {
-    // const valor: unknown = inputValue.target.value;
+  function handlerChange(inputValue: React.ChangeEvent<HTMLInputElement>) {
+    const valor = inputValue.target.textContent;
 
-    // if (valor instanceof Object) {
-    //   let ObjValor: AutoInput = valor;
-    //   console.log(ObjValor.label);
-    // } else {
-    //   console.log(valor);
-    // }
-
-    console.log(inputValue?.label);
+    if (valor) {
+      setAutoInput(valor);
+    } else {
+      setAutoInput("");
+    }
   }
 
   async function UpdateService(data: IDataService) {
+    data.name = autoInput;
+    if (data.date_send === ISODateSmall(props.date_send)) {
+      data.date_send = "";
+    }
+
+    if (data.date_received === ISODateSmall(props.date_received)) {
+      data.date_received = "";
+    }
+
     let Rescheck = await EditService(data);
     if (!!Rescheck) {
       handleClose();
@@ -159,14 +166,10 @@ export default function BasicModalService(props: IDataService) {
                         className="form-control"
                         name="name"
                         size={48}
-                        placeholder={props.name}
-                        required
                       />
                     </div>
                   </label>
-                  <ComboBox isChange={(event, value) => handlerChange(value)} />
-
-                  <br />
+                  <ComboBox isChange={(e) => handlerChange(e)} />
                   <label role="label">
                     <span>Ano</span>
                     <div className="input-group">
@@ -177,8 +180,7 @@ export default function BasicModalService(props: IDataService) {
                         className="form-control"
                         name="onlyYear"
                         size={2}
-                        placeholder={"aaaa"}
-                        required
+                        placeholder={props.onlyyear}
                       />
                     </div>
                   </label>
@@ -192,7 +194,6 @@ export default function BasicModalService(props: IDataService) {
                         className="form-control"
                         name="cpf"
                         placeholder={props.cpf}
-                        required
                       />
                     </div>
                   </label>

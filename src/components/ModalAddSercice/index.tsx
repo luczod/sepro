@@ -4,10 +4,11 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Tooltip from "@mui/material/Tooltip";
+import ComboBox from "../ComboBox";
+import InputMask from "react-input-mask";
 import axios, { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { FaAddressBook } from "react-icons/fa6";
-import Router from "next/router";
 
 //tost
 import "react-toastify/dist/ReactToastify.css";
@@ -43,11 +44,24 @@ async function AddService(objInput: { name: string }) {
 
 export default function BasicModalAddService() {
   const [open, setOpen] = React.useState(false);
+  const [autoInput, setAutoInput] = React.useState<string | null>(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { register, handleSubmit } = useForm();
 
+  function handlerChange(inputValue: React.ChangeEvent<HTMLInputElement>) {
+    const valor = inputValue.target.textContent;
+
+    if (valor) {
+      setAutoInput(valor);
+    } else {
+      setAutoInput("");
+    }
+  }
+
   async function InsertService(data: IDataService) {
+    data.name = autoInput;
+
     let Rescheck = await AddService(data);
     if (!!Rescheck) {
       handleClose();
@@ -89,12 +103,27 @@ export default function BasicModalAddService() {
                       Nome
                     </span>
                     <div className="input-group">
-                      <input
+                      {/*  <input
                         {...register("name")}
                         type="search"
                         className="form-control"
                         name="name"
                         size={48}
+                        required
+                      /> */}
+                      <ComboBox isChange={(e) => handlerChange(e)} />
+                    </div>
+                  </label>
+                  <label role="label">
+                    <span>Ano</span>
+                    <div className="input-group">
+                      <InputMask
+                        {...register("onlyYear")}
+                        mask="9999"
+                        type="text"
+                        className="form-control"
+                        name="onlyYear"
+                        size={2}
                         required
                       />
                     </div>

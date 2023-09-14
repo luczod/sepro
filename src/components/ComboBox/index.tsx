@@ -35,8 +35,8 @@ async function getAllList() {
 getAllList();
 
 interface IProps {
-  // isChange?: (isChecked: React.ChangeEvent<HTMLInputElement>) => void;
-  isChange?: (event: React.SyntheticEvent<Element, Event>, value: any) => void;
+  isChange?: (isChecked: React.ChangeEvent<HTMLInputElement>) => void;
+  // isChange?: (event: React.SyntheticEvent<Element, Event>, value: any) => void;
 }
 
 export default function ComboBox({ isChange }: IProps) {

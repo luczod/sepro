@@ -32,6 +32,18 @@ export default async function handler(
     }
   }
 
+  if (!!req.body.onlyYear) {
+    const onlyYear = req.body.onlyYear;
+    const SQLonlyYear = `update services set onlyyear = ? WHERE service_id = ${Id}`;
+    const result = await runQuery(SQLonlyYear, [onlyYear]);
+    if (typeof result === "object") {
+      console.log(result);
+      res.status(200).end();
+    } else {
+      res.status(500).json({ Error: result });
+    }
+  }
+
   if (!!req.body.date_send) {
     const date_send = req.body.date_send;
     const SQLdate_send = `update services set date_send = ? WHERE service_id = ${Id}`;

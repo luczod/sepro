@@ -29,6 +29,7 @@ export interface IDataService {
   charged: string;
   received: string;
   date_received: string;
+  onlyyear: string;
   obs: string;
 }
 

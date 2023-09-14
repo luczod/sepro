@@ -160,6 +160,7 @@ export default function BasicModalPay(props: IDataService) {
               </div>
             </Typography>
             <hr />
+            <br />
             <Button
               className="btn btn-outline-primary"
               type="submit"

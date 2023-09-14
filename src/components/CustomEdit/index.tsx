@@ -92,7 +92,7 @@ export default function BasicModalEdit(props: IDataCustumers) {
           <form onSubmit={handleSubmit(UpdateUser)}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Editar Cliente&nbsp;
-              <FaPen size={18} /> -&nbsp;
+              <FaPen size={18} color="blue" /> -&nbsp;
               <span style={{ fontSize: "18px", fontWeight: "bold" }}>
                 {props.name}
               </span>

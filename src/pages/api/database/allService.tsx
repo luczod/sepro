@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const SQLquery = `SELECT s.service_id,s.name,s.cpf,s.date_send ,s.charged ,s.received,s.date_received,s.obs  
+    const SQLquery = `SELECT s.service_id,s.name,s.cpf,s.date_send ,s.charged ,s.received,s.date_received, s.onlyyear, s.obs  
                       FROM services s ORDER BY s.date_send DESC;`;
     const result = await runQuery(SQLquery, []);
 
