@@ -11,7 +11,7 @@ export default async function handler(
   if (req.method === "POST") {
     const cpf = fnRawCPF(req.body.cpf);
     const SQLAdd = `INSERT INTO customers (name, cpf, birthdate, phoneOne, phoneTwo)
-                    VALUES (?, ?, ?, ?, ?)`;
+                    VALUES (?, ?, ?, ?, ?);`;
     const result = await runQuery(SQLAdd, [
       req.body.Nome,
       cpf,

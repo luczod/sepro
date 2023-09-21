@@ -126,7 +126,6 @@ export default function BasicModalAdd() {
                         className="form-control"
                         name="birthdate"
                         placeholder="Data de nascimento"
-                        required
                       />
                     </div>
                   </label>
@@ -141,7 +140,6 @@ export default function BasicModalAdd() {
                         className="form-control"
                         name="phone1"
                         placeholder="Telefone 1"
-                        required
                       />
                     </div>
                   </label>
@@ -155,7 +153,6 @@ export default function BasicModalAdd() {
                         className="form-control"
                         name="phone2"
                         placeholder="Telefone 2"
-                        required
                       />
                     </div>
                   </label>
