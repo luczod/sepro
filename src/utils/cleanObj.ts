@@ -17,18 +17,29 @@ const obj = {
 
 // cleanObj(obj);
 
-export function HandlerUpdate(updateData: any, updateId : string){
-const cleanUser = cleanObj(updateData)
+export function HandlerUpdate(updateData: any, updateId: string) {
+  const cleanUser = cleanObj(updateData);
 
-const updateFields = Object.keys(cleanUser)
-      .map((key) => `${key} = ?`)
-      .join(', ');
+  const updateFields = Object.keys(cleanUser)
+    .map((key) => `${key} = ?`)
+    .join(", ");
 
-const values = Object.values(cleanUser);
-    values.push(updateId);
+  const values = Object.values(cleanUser);
+  values.push(updateId);
 
-    return [updateFields,values]
-
+  return [updateFields, values];
 }
 
 // const [updateFields,values] = HandlerUpdate(userData,userId)
+
+export function HandlerInsert(insertData: any) {
+  const cleanUser = cleanObj(insertData);
+
+  const insertFields = Object.keys(cleanUser)
+    .map((key) => `${key}`)
+    .join(", ");
+
+  const values = Object.values(cleanUser);
+
+  return [insertFields, values];
+}

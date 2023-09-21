@@ -4,20 +4,21 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import Modal from "@mui/material/Modal";
+import InputMask from "react-input-mask";
+import Router from "next/router";
 import axios, { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { ErrorRequest, SucessRequest } from "../../utils/MsgFlash";
 import { FaPen } from "react-icons/fa6";
-import InputMask from "react-input-mask";
 
 //tost
 import "react-toastify/dist/ReactToastify.css";
 
 //iterfaces
-import { IDataCustumers } from "../../utils/interfaces";
+import { IDataCustomers } from "../../utils/interfaces";
 import { ContainerLabel } from "./styles";
-import Router from "next/router";
 import { ISODateSmall } from "../../utils/sortDate";
+import { fnRawCPF } from "../../utils/formatNumber";
 
 type VarError = {
   Error?: string;
@@ -36,7 +37,7 @@ const style = {
   p: 4,
 };
 
-async function EditCustom(objInput: { Nome: string }) {
+async function EditCustom(objInput: IDataCustomers) {
   console.log(objInput);
 
   let queryCustomers = await axios
@@ -55,19 +56,24 @@ async function EditCustom(objInput: { Nome: string }) {
   return queryCustomers;
 }
 
-export default function BasicModalEdit(props: IDataCustumers) {
+export default function BasicModalEdit(props: IDataCustomers) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { register, handleSubmit } = useForm();
 
-  async function UpdateUser(data) {
+  async function UpdateUser(data: IDataCustomers) {
+    if (data.cpf) {
+      const cpfRaw = fnRawCPF(data.cpf);
+      data.cpf = cpfRaw;
+    }
+
     let Rescheck = await EditCustom(data);
 
     if (!!Rescheck) {
       await Router.push("/Customers");
       handleClose();
-      SucessRequest(data?.Nome + " Foi editado com Sucesso");
+      SucessRequest(props.name + " Foi editado com Sucesso");
     }
   }
 
@@ -115,17 +121,17 @@ export default function BasicModalEdit(props: IDataCustumers) {
                     </span>
                     <div className="input-group">
                       <input
-                        {...register("Nome")}
+                        {...register("name")}
                         type="search"
                         className="form-control"
-                        name="Nome"
+                        name="name"
                         size={48}
                         placeholder={props.name}
                       />
                       <input
-                        {...register("Id")}
+                        {...register("idclientes")}
                         type="hidden"
-                        name="Id"
+                        name="idclientes"
                         value={props.idclientes}
                       />
                     </div>
@@ -161,10 +167,10 @@ export default function BasicModalEdit(props: IDataCustumers) {
                     <span>Telefone 1</span>
                     <div className="input-group">
                       <input
-                        {...register("phone1")}
+                        {...register("phoneOne")}
                         type="search"
                         className="form-control"
-                        name="phone1"
+                        name="phoneOne"
                         placeholder={props.phoneOne}
                       />
                     </div>
@@ -173,10 +179,10 @@ export default function BasicModalEdit(props: IDataCustumers) {
                     <span>Telefone 2</span>
                     <div className="input-group">
                       <input
-                        {...register("phone2")}
+                        {...register("phoneTwo")}
                         type="search"
                         className="form-control"
-                        name="phone2"
+                        name="phoneTwo"
                         placeholder={props.phoneTwo}
                       />
                     </div>

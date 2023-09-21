@@ -18,6 +18,8 @@ type VarError = {
 
 //iterfaces
 import { ContainerLabel, Boxstyle } from "./styles";
+import { IDataCustomers } from "../../utils/interfaces";
+import { fnRawCPF } from "../../utils/formatNumber";
 
 async function addCustom(objInput: {}) {
   console.log(objInput);
@@ -46,7 +48,11 @@ export default function BasicModalAdd() {
   const handleClose = () => setOpen(false);
   const { register, handleSubmit } = useForm();
 
-  async function UpdateUser(data) {
+  async function UpdateUser(data: IDataCustomers) {
+    if (data.cpf) {
+      const cpfRaw = fnRawCPF(data.cpf);
+      data.cpf = cpfRaw;
+    }
     console.log(data);
     let Rescheck = await addCustom(data);
     if (!!Rescheck) {
@@ -91,10 +97,10 @@ export default function BasicModalAdd() {
                     </span>
                     <div className="input-group">
                       <input
-                        {...register("Nome")}
+                        {...register("name")}
                         type="search"
                         className="form-control"
-                        name="Nome"
+                        name="name"
                         size={48}
                         placeholder="Nome do cliente"
                         required
@@ -134,11 +140,11 @@ export default function BasicModalAdd() {
                     <span>Telefone 1</span>
                     <div className="input-group">
                       <InputMask
-                        {...register("phone1")}
+                        {...register("phoneOne")}
                         mask="(99) 99999-9999"
                         type="search"
                         className="form-control"
-                        name="phone1"
+                        name="phoneOne"
                         placeholder="Telefone 1"
                       />
                     </div>
@@ -147,11 +153,11 @@ export default function BasicModalAdd() {
                     <span>Telefone 2</span>
                     <div className="input-group">
                       <InputMask
-                        {...register("phone2")}
+                        {...register("phoneTwo")}
                         mask="(99) 9999-9999"
                         type="search"
                         className="form-control"
-                        name="phone2"
+                        name="phoneTwo"
                         placeholder="Telefone 2"
                       />
                     </div>

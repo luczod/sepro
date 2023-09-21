@@ -42,7 +42,8 @@ const columnsTop = [
   {
     name: "Ano",
     selector: (row: IDataService) => row.onlyyear,
-    omit: true,
+    sortable: true,
+    maxWidth: "50px",
   },
 
   {
@@ -53,32 +54,33 @@ const columnsTop = [
   {
     name: "cpf",
     selector: (row: IDataService) => formatCPF(row.cpf),
+    maxWidth: "160px",
   },
   {
     name: "Data de envio",
     selector: (row: IDataService) => ISOtoDateBr(row.date_send),
     style: { fontWeight: "bold" },
     sortable: true,
-    maxWidth: "240px",
+    maxWidth: "180px",
     sortFunction: convertToDate1,
   },
   {
     name: "Valor Cobrado",
     selector: (row: IDataService) => formatNumber(row.charged),
-    maxWidth: "240px",
+    maxWidth: "180px",
     sortable: false,
   },
 
   {
     name: "Valor Recebido",
     selector: (row: IDataService) => formatNumber(row.received),
-    maxWidth: "240px",
+    maxWidth: "180px",
     sortable: false,
   },
   {
     name: "Data Recebido",
     selector: (row: IDataService) => ISOtoDateBr(row.date_received),
-    maxWidth: "240px",
+    maxWidth: "180px",
     sortable: true,
     sortFunction: convertToDate2,
   },

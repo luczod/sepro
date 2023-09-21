@@ -22,7 +22,7 @@ const pool = mysql.createPool({
 // A function to run SQL queries
 export const runQuery = async (
   query: string,
-  values: any[]
+  values: any[] | string
 ): Promise<any[] | {}> => {
   const promisePool = pool.promise();
 
