@@ -8,12 +8,12 @@ export default async function handler(
 ) {
   // in sql ? means value.
   // in sql ?? means tables ou columns
-
   const customData = req.body;
-  const [insertFields, values] = HandlerInsert(customData);
+  const [insertFields, placeholders, values] = HandlerInsert(customData);
+
   if (req.method === "POST") {
     const SQLAdd = `INSERT INTO customers (${insertFields})
-                    VALUES (?, ?, ?, ?, ?);`;
+                    VALUES (${placeholders});`;
     const result = await runQuery(SQLAdd, values);
 
     if (typeof result === "object") {

@@ -1,16 +1,19 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { runQuery } from "../../../utils/db";
 import { HandlerUpdate } from "../../../utils/cleanObj";
+import { getDateLog } from "../../../utils/MsgFlash";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const customId = req.body.idclientes;
-  const customData = req.body;
-  const [updateFields, values] = HandlerUpdate(customData, customId);
+  const { idclientes, ...rest } = req.body;
+  const [updateFields, values] = HandlerUpdate({ ...rest }, idclientes);
 
-  const SQLcustom = `update customers set cpf ${updateFields} WHERE idclientes = ${customId}`;
+  console.log(updateFields);
+  console.log(values);
+
+  const SQLcustom = `update customers set ${updateFields} WHERE idclientes = ?`;
   const result = await runQuery(SQLcustom, values);
   if (typeof result === "object") {
     console.log(result);

@@ -10,7 +10,7 @@ export function cleanObj(value: any) {
 }
 
 const obj = {
-  one: "",
+  one: "alguma coisa",
   two: 2,
   three: null,
 };
@@ -33,13 +33,19 @@ export function HandlerUpdate(updateData: any, updateId: string) {
 // const [updateFields,values] = HandlerUpdate(userData,userId)
 
 export function HandlerInsert(insertData: any) {
-  const cleanUser = cleanObj(insertData);
+  const cleanData = cleanObj(insertData);
 
-  const insertFields = Object.keys(cleanUser)
-    .map((key) => `${key}`)
+  const insertFields = Object.keys(cleanData).join(", ");
+  const placeholders = Object.keys(cleanData)
+    .map(() => "?")
     .join(", ");
+  const values = Object.values(cleanData);
 
-  const values = Object.values(cleanUser);
-
-  return [insertFields, values];
+  return [insertFields, placeholders, values];
 }
+
+/* const [insertFields, placeholders, values] = HandlerInsert(obj);
+
+console.log(insertFields);
+console.log(values);
+console.log(placeholders); */
