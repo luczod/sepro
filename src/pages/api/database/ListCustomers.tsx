@@ -6,7 +6,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const SQLquery = "SELECT c.name AS label FROM customers c;";
+    const SQLquery =
+      "SELECT c.name AS label, c.idclientes AS id FROM customers c;";
     const result = await runQuery(SQLquery, []);
 
     if (Array.isArray(result)) {

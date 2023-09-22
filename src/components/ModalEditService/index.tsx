@@ -84,8 +84,11 @@ export default function BasicModalService(props: IDataService) {
     setList(listData);
   }, []);
 
-  function handlerChange(inputValue: React.ChangeEvent<HTMLInputElement>) {
-    const valor = inputValue.target.textContent;
+  function handlerChange(
+    inputValue: React.SyntheticEvent<Element, Event>,
+    value: any
+  ) {
+    const valor = value?.id;
 
     if (valor) {
       setAutoInput(valor);
@@ -95,7 +98,8 @@ export default function BasicModalService(props: IDataService) {
   }
 
   async function UpdateService(data: IDataService) {
-    data.name = autoInput;
+    data.cliente_id = autoInput;
+
     if (data.date_send === ISODateSmall(props.date_send)) {
       data.date_send = "";
     }
@@ -169,7 +173,9 @@ export default function BasicModalService(props: IDataService) {
                       />
                     </div>
                   </label>
-                  <ComboBox isChange={(e) => handlerChange(e)} />
+                  <ComboBox
+                    isChange={(event, value) => handlerChange(event, value)}
+                  />
                   <label role="label">
                     <span>Ano</span>
                     <div className="input-group">
