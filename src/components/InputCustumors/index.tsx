@@ -98,9 +98,9 @@ const SubHeader: React.FC<IProps> = ({ links }) => {
           <Input>
             <label role="label">
               <span
-                style={{ display: "block", width: "50px", fontWeight: "bold" }}
+                style={{ display: "block", width: "8rem", fontWeight: "bold" }}
               >
-                Nome
+                Nome ou CPF
               </span>
               <div className="input-group">
                 <input
