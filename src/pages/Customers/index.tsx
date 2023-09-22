@@ -1,19 +1,21 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import router from "next/router";
 import axios from "axios";
 import { Tooltip } from "@mui/material";
-import { AxiosError } from "axios";
-import { ErrorRequest } from "../../utils/MsgFlash";
-import { handleDownloadExcel } from "../../components/DownExcel";
-import { ISOtoDateBr } from "../../utils/sortDate";
-import { FaFileArrowDown, FaBuildingColumns } from "react-icons/fa6";
+import { useQuery } from "react-query";
 import { formatCPF } from "../../utils/formatNumber";
 import { Alignment } from "react-data-table-component";
+import { AxiosError } from "axios";
+import { ISOtoDateBr } from "../../utils/sortDate";
+import { ErrorRequest } from "../../utils/MsgFlash";
+import { FaFileArrowDown } from "react-icons/fa6";
+import { handleDownloadExcel } from "../../components/DownExcel";
+
 import "react-toastify/dist/ReactToastify.css";
 
 //types
-import { IDataCustumers } from "../../utils/interfaces";
+import { IDataCustomers } from "../../utils/interfaces";
 
 //compoennts
 import SubHeader from "../../components/InputCustumors";
@@ -25,45 +27,44 @@ import ModalSepro from "../../components/CustomSepro";
 import ModalInMass from "../../components/CustomInMass";
 
 // toLocaleTimeString("pt-BR");
-
 const columnsTop = [
   {
     name: "ID",
-    selector: (row: IDataCustumers) => row.idclientes,
+    selector: (row: IDataCustomers) => row.idclientes,
     omit: true,
   },
   {
     name: "NOME",
-    selector: (row: IDataCustumers) => row.name,
+    selector: (row: IDataCustomers) => row.name,
     sortable: true,
   },
   {
     name: "CPF",
-    selector: (row: IDataCustumers) => formatCPF(row.cpf),
+    selector: (row: IDataCustomers) => formatCPF(row.cpf),
     style: { fontWeight: "bold" },
     maxWidth: "165px",
     sortable: false,
   },
   {
-    name: "DATA DE NASCIMENTO",
-    selector: (row: IDataCustumers) => ISOtoDateBr(row.birthdate),
-    maxWidth: "255px",
+    name: "DATA DE NASC.",
+    selector: (row: IDataCustomers) => ISOtoDateBr(row.birthdate),
+    maxWidth: "200px",
     sortable: false,
   },
   {
     name: "TELEFONE 1",
-    selector: (row: IDataCustumers) => row.phoneOne,
+    selector: (row: IDataCustomers) => row.phoneOne,
     maxWidth: "175px",
     sortable: false,
   },
   {
     name: "TELEFONE 2",
-    selector: (row: IDataCustumers) => row.phoneTwo,
+    selector: (row: IDataCustomers) => row.phoneTwo,
     maxWidth: "175px",
     sortable: false,
   },
   {
-    cell: (row: IDataCustumers) => (
+    cell: (row: IDataCustomers) => (
       <>
         <ModalEdit {...row} />
         <ModalDelete {...row} />
@@ -74,7 +75,7 @@ const columnsTop = [
     maxWidth: "200px",
   },
 ];
-let dataTable: IDataCustumers[] | null = [];
+let dataTable: IDataCustomers[] | null = [];
 
 async function loadTableAll() {
   let queryCustomers = await axios
@@ -101,7 +102,7 @@ export const listAll = async () => {
   return;
 };
 
-export const loadTableNome = async (textinput: IDataCustumers[] | null) => {
+export const loadTableNome = async (textinput: IDataCustomers[] | null) => {
   dataTable = textinput;
   return;
 };

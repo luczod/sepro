@@ -184,19 +184,6 @@ export default function BasicModalService(props: IDataService) {
                       />
                     </div>
                   </label>
-                  <label role="label">
-                    <span>CPF</span>
-                    <div className="input-group">
-                      <InputMask
-                        {...register("cpf")}
-                        mask="999.999.999-99"
-                        type="search"
-                        className="form-control"
-                        name="cpf"
-                        placeholder={props.cpf}
-                      />
-                    </div>
-                  </label>
                   <br />
                   <label role="label">
                     <span>Data de envio</span>

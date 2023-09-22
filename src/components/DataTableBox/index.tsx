@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import DataTable, { TableProps } from "react-data-table-component";
 
 const paginationOptions = {

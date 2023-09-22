@@ -1,10 +1,13 @@
 // import "../styles/globals.css";
-import type { AppProps } from "next/app";
-import { ThemeProvider } from "styled-components";
-import { theme } from "../styles/theme";
-import { GlobalStyles } from "../styles/global-styles";
 import Layout from "../components/Layout";
 import { useRouter } from "next/router";
+import type { AppProps } from "next/app";
+import { theme } from "../styles/theme";
+import { ThemeProvider } from "styled-components";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+// Create a client
+const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -18,11 +21,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     );
   } else {
     return (
-      <ThemeProvider theme={theme}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ThemeProvider>
+      </QueryClientProvider>
     );
   }
 }

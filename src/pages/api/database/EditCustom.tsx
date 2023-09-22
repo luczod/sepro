@@ -10,8 +10,8 @@ export default async function handler(
   const { idclientes, ...rest } = req.body;
   const [updateFields, values] = HandlerUpdate({ ...rest }, idclientes);
 
-  console.log(updateFields);
-  console.log(values);
+  console.log(getDateLog() + updateFields);
+  console.log(getDateLog() + values);
 
   const SQLcustom = `update customers set ${updateFields} WHERE idclientes = ?`;
   const result = await runQuery(SQLcustom, values);

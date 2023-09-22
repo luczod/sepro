@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { AxiosError } from "axios";
 import axios from "axios";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from "react-toastify";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { FaSistrix } from "react-icons/fa6";
+import { AxiosError } from "axios";
+import { useMutation } from "react-query";
+import { ErrorRequest } from "../../utils/MsgFlash";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //pages function
 import { loadTableNome } from "../../pages/Customers";
@@ -16,13 +18,15 @@ import { Header } from "./styles";
 import { Input } from "./styles";
 
 //tipagem
-import { IDataCustumers } from "../../utils/interfaces";
+import { IDataCustomers } from "../../utils/interfaces";
+import { fnRawCPF } from "../../utils/formatNumber";
+
 interface IProps {
   links: string;
 }
 
 //variables
-let ResDb: IDataCustumers[];
+let ResDb: IDataCustomers[];
 let remoteProtocolo: string | null = null;
 let selectElement: HTMLInputElement;
 type ErrVar = {
@@ -30,15 +34,9 @@ type ErrVar = {
   code?: string;
 };
 
-function ErrorRequest(mensagem: string) {
-  toast.error(mensagem, {
-    position: toast.POSITION.TOP_CENTER,
-  });
-}
-
-async function loadTable(nameinput: string) {
+async function loadTable(nameinput: string, rota: string) {
   let queryCustomers = await axios
-    .post("/api/database/nome", { nome: nameinput })
+    .post(`/api/database/${rota}`, { nome: nameinput })
     .then((resposta) => {
       // console.log(resposta.data);
       return resposta.data;
@@ -60,26 +58,26 @@ export const remoteInput = async (textinput: string) => {
 // tipando o children como um node do react
 // checa o que tem entre as tags do componets
 const SubHeader: React.FC<IProps> = ({ links }) => {
-  const [loadbtn1, setLoadbtn1] = useState<boolean>(false);
-  const [loadbtn2, setLoadbtn2] = useState<boolean>(false);
-  const [loadbtn3, setLoadbtn3] = useState<boolean>(false);
   const router = useRouter();
   const { register, handleSubmit } = useForm();
+  const [loadbtn2, setLoadbtn2] = useState<boolean>(false);
 
-  async function SearchNome(data: {
-    Protocolo: string;
-    Nome: string;
-    Seccao: string;
-  }) {
+  async function SearchNome(data: { Nome: string }) {
     setLoadbtn2(true);
-    console.log(data);
+    // console.log(data);
 
     if (data.Nome === "") {
       listAll();
       setLoadbtn2(false);
       return;
     }
-    ResDb = await loadTable(data.Nome);
+
+    let isCpf = fnRawCPF(data.Nome);
+    if (Number(isCpf)) {
+      ResDb = await loadTable(isCpf, "cpf");
+    } else {
+      ResDb = await loadTable(data.Nome, "nome");
+    }
 
     if (!ResDb) {
       console.log(ResDb);
