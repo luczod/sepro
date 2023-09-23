@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import ThemeProvider from "styled-components";
+import { theme } from "../../styles/theme";
 
 /* interface IContainerProps {
   menuIsOpen: boolean;
@@ -40,5 +41,30 @@ export const ContainerLink = styled.div`
 
       text-decoration: underline;
     }
+  }
+`;
+
+export const ToggleMenu = styled.button`
+  width: 40px;
+  height: 40px;
+
+  border-radius: 5px;
+  font-size: 22px;
+
+  background-color: ${theme.colors.secondaryColor};
+  color: ${theme.colors.white};
+
+  transition: opacity 0.3s;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  display: none;
+
+  @media (max-width: 800px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;

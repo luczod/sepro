@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import Router from "next/router";
 import { parseCookies, destroyCookie } from "nookies";
 
+import { MdClose, MdMenu } from "react-icons/md";
+
 import { Container, ContainerLink } from "./styles";
-import Router from "next/router";
+import { ToggleMenu } from "./styles";
 
 const cookies = parseCookies();
 
@@ -15,8 +18,17 @@ async function LogoutUser() {
 }
 
 const AsideBox: React.FC = () => {
+  const [toggleMenuIsOpened, setToggleMenuIsOpened] = useState(false);
+
+  const handleToggleMenu = () => {
+    setToggleMenuIsOpened(!toggleMenuIsOpened);
+  };
+
   return (
     <Container>
+      <ToggleMenu onClick={handleToggleMenu}>
+        {toggleMenuIsOpened ? <MdClose /> : <MdMenu />}
+      </ToggleMenu>
       <div>Controle de Clientes</div>
       <br />
       <ContainerLink>
