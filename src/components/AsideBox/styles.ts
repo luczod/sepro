@@ -2,15 +2,11 @@ import styled, { css } from "styled-components";
 import ThemeProvider from "styled-components";
 import { theme } from "../../styles/theme";
 
-/* interface IContainerProps {
+interface IContainerProps {
   menuIsOpen: boolean;
 }
 
-interface IThemeToggleFooterProps {
-  menuIsOpen: boolean;
-}
- */
-export const Container = styled.div`
+export const Container = styled.div<IContainerProps>`
   grid-area: AS;
 
   padding: 20px;
@@ -21,6 +17,24 @@ export const Container = styled.div`
   background-color: #1351b4;
 
   /* height: calc(100vh - 70px); */
+  @media (max-width: 800px) or (max-height: 400px) {
+    padding-left: 20px;
+    position: fixed;
+    z-index: 2;
+
+    width: 170px;
+
+    height: ${(props) => (props.menuIsOpen ? "100vh" : "70px")};
+    overflow: hidden;
+
+    ${(props) =>
+      !props.menuIsOpen &&
+      css`
+        border: none;
+        border-bottom: 1px solid black;
+        background-color: ${theme.colors.white};
+      `};
+  }
 `;
 
 export const ContainerLink = styled.div`

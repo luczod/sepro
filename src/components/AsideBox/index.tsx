@@ -25,7 +25,7 @@ const AsideBox: React.FC = () => {
   };
 
   return (
-    <Container>
+    <Container menuIsOpen={toggleMenuIsOpened}>
       <ToggleMenu onClick={handleToggleMenu}>
         {toggleMenuIsOpened ? <MdClose /> : <MdMenu />}
       </ToggleMenu>
