@@ -18,6 +18,7 @@ import { Input, ScrollBarBox } from "./styles";
 //tipagem
 import { IListYear, IDataService } from "../../utils/interfaces";
 import { ErrorRequest } from "../../utils/MsgFlash";
+import { fnRawCPF } from "../../utils/formatNumber";
 interface IProps {
   listYear: IListYear[] | any;
 }
@@ -30,9 +31,9 @@ type ErrVar = {
   code?: string;
 };
 
-async function loadTable(nameinput: string) {
+async function loadTable(nameinput: string, filed: string) {
   let queryServices = await axios
-    .post("/api/database/service", { nome: nameinput })
+    .post("/api/database/service", { [filed]: nameinput })
     .then((resposta) => {
       // console.log(resposta.data);
       return resposta.data;
@@ -87,7 +88,13 @@ export default function SubHeader({ listYear }: IProps) {
       setLoadbtn1(false);
       return;
     }
-    ResDb = await loadTable(data.Nome);
+
+    let isCpf = fnRawCPF(data.Nome);
+    if (Number(isCpf)) {
+      ResDb = await loadTable(isCpf, "cpf");
+    } else {
+      ResDb = await loadTable(data.Nome, "nome");
+    }
 
     if (!ResDb) {
       console.log(ResDb);
