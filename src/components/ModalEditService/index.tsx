@@ -18,6 +18,8 @@ import { ISODateSmall } from "../../utils/sortDate";
 //iterfaces
 import { IDataService } from "../../utils/interfaces";
 import { ContainerLabel, Boxstyle } from "./styles";
+import BasicModalAdd from "../CustomAdd";
+import { useRouter } from "next/router";
 
 type VarError = {
   Error?: string;
@@ -74,8 +76,10 @@ async function getAllList() {
 
 export default function BasicModalService(props: IDataService) {
   const [open, setOpen] = React.useState(false);
+  const [show, setShow] = React.useState(true);
   const [list, setList] = React.useState<null | any[]>(listData);
   const [autoInput, setAutoInput] = React.useState<string>("");
+  const router = useRouter();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { register, handleSubmit } = useForm();
@@ -97,6 +101,14 @@ export default function BasicModalService(props: IDataService) {
     }
   }
 
+  function openInvisibily() {
+    setShow(true);
+    if (!open) {
+      handleClose();
+      handleOpen();
+    }
+  }
+
   async function UpdateService(data: IDataService) {
     data.cliente_id = autoInput;
 
@@ -114,12 +126,16 @@ export default function BasicModalService(props: IDataService) {
     }
   }
 
+  function handlerVisibility() {
+    setShow(false);
+  }
+
   return (
     <div>
       <Tooltip title="Editar" style={{ fontSize: "2.5vh" }}>
         <Button
           className="btn btn-outline-light"
-          onClick={handleOpen}
+          onClick={openInvisibily}
           style={{ color: "blue" }}
         >
           <FaPen size={18} />
@@ -130,6 +146,7 @@ export default function BasicModalService(props: IDataService) {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        style={{ visibility: show ? "visible" : "hidden" }}
       >
         <Box sx={Boxstyle}>
           <form onSubmit={handleSubmit(UpdateService)}>
@@ -173,9 +190,27 @@ export default function BasicModalService(props: IDataService) {
                       />
                     </div>
                   </label>
-                  <ComboBox
-                    isChange={(event, value) => handlerChange(event, value)}
-                  />
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <ComboBox
+                      isChange={(event, value) => handlerChange(event, value)}
+                      noOptionsProps={
+                        <>
+                          <span style={{ color: "Black", marginTop: "0.5rem" }}>
+                            Sem opções&nbsp;
+                          </span>
+                        </>
+                      }
+                    />
+                    <span onClick={handlerVisibility}>
+                      <BasicModalAdd />
+                    </span>
+                  </div>
                   <label role="label">
                     <span>Ano</span>
                     <div className="input-group">

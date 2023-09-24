@@ -48,10 +48,6 @@ export default function BasicModalAdd() {
   const handleClose = () => setOpen(false);
   const { register, handleSubmit } = useForm();
 
-  function callTwofn() {
-    alert("okkkkkkkkk");
-  }
-
   async function UpdateUser(data: IDataCustomers) {
     if (data.cpf) {
       const cpfRaw = fnRawCPF(data.cpf);
@@ -66,8 +62,8 @@ export default function BasicModalAdd() {
 
   return (
     <div>
-      <Tooltip title="Adcionar cliente" style={{ fontSize: "2.5vh" }}>
-        <Button onClick={callTwofn}>
+      <Tooltip title="Adicionar cliente" style={{ fontSize: "2.5vh" }}>
+        <Button onClick={handleOpen}>
           <FaAddressBook />
         </Button>
       </Tooltip>
@@ -80,7 +76,7 @@ export default function BasicModalAdd() {
         <Box sx={Boxstyle}>
           <form onSubmit={handleSubmit(UpdateUser)}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Adcionar um novo cliente{" "}
+              Adcionar um novo cliente&nbsp;
               <FaAddressBook color="#1976D2" style={{ fontSize: "2.5vh" }} />
             </Typography>
             <Button

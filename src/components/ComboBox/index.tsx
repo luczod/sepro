@@ -3,8 +3,6 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import axios, { AxiosError } from "axios";
 import { ErrorRequest } from "../../utils/MsgFlash";
-import Link from "next/link";
-import BasicModalAdd from "../CustomAdd";
 let listData: any[] | null;
 
 type VarError = {
@@ -37,9 +35,10 @@ getAllList();
 interface IProps {
   // isChange?: (isChecked: React.ChangeEvent<HTMLInputElement>) => void;
   isChange?: (event: React.SyntheticEvent<Element, Event>, value: any) => void;
+  noOptionsProps: React.ReactNode;
 }
 
-export default function ComboBox({ isChange }: IProps) {
+export default function ComboBox({ isChange, noOptionsProps }: IProps) {
   const [list, setList] = React.useState<any[]>(listData);
   console.log("estou no combo: ");
 
@@ -52,16 +51,7 @@ export default function ComboBox({ isChange }: IProps) {
       // onChangeCapture={isChange}
       id="combo-box"
       options={!list ? [{ label: "Carregando..." }] : list}
-      noOptionsText={
-        <>
-          <div style={{ width: 300, display: "flex", flexDirection: "row" }}>
-            <span style={{ color: "Black", marginTop: "0.5rem" }}>
-              Sem opções&nbsp;
-            </span>
-            <BasicModalAdd />
-          </div>
-        </>
-      }
+      noOptionsText={noOptionsProps}
       sx={{ width: 500 }}
       onChange={isChange}
       renderInput={(params) => <TextField {...params} />}
