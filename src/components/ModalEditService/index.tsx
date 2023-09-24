@@ -1,3 +1,4 @@
+require("dotenv").config();
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -24,7 +25,7 @@ import { useRouter } from "next/router";
 type VarError = {
   Error?: string;
 };
-
+const internal = process.env.INTERNAL_HOST;
 type AutoInput = {
   label?: string;
 };
@@ -53,7 +54,7 @@ async function EditService(objInput: { name: string }) {
 
 async function ListAllCustomers() {
   let queryList = await axios
-    .get("http://localhost:3000/api/database/ListCustomers")
+    .get(internal + "api/database/ListCustomers")
     .then((resposta) => {
       return resposta.data;
     })
@@ -199,13 +200,6 @@ export default function BasicModalService(props: IDataService) {
                   >
                     <ComboBox
                       isChange={(event, value) => handlerChange(event, value)}
-                      noOptionsProps={
-                        <>
-                          <span style={{ color: "Black", marginTop: "0.5rem" }}>
-                            Sem opções&nbsp;
-                          </span>
-                        </>
-                      }
                     />
                     <span onClick={handlerVisibility}>
                       <BasicModalAdd />

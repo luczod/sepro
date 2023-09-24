@@ -5,9 +5,11 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Tooltip from "@mui/material/Tooltip";
 import axios, { AxiosError } from "axios";
+import { formatCPF } from "../../utils/formatNumber";
 import { useForm } from "react-hook-form";
 import { ErrorRequest, SucessRequest } from "../../utils/MsgFlash";
 import { FaMoneyCheckDollar } from "react-icons/fa6";
+import { fnISOnumber } from "../../utils/formtMonet";
 
 //tost
 import "react-toastify/dist/ReactToastify.css";
@@ -29,7 +31,7 @@ async function EditService(objInput: { name: string }) {
     .post("/api/database/EditPay", { ...obj })
     .then((resposta) => {
       console.log(resposta.data);
-      SucessRequest(objInput?.name + " Foi editado com Sucesso");
+      SucessRequest(name + " Foi editado com Sucesso");
       return true;
     })
     .catch((err: AxiosError) => {
@@ -49,6 +51,24 @@ export default function BasicModalPay(props: IDataService) {
   const { register, handleSubmit } = useForm();
 
   async function UpdateService(data: IDataService) {
+    // checked if has dot and comman
+    if (data.charged) {
+      data.charged = fnISOnumber(data.charged);
+    }
+
+    if (data.received) {
+      data.received = fnISOnumber(data.received);
+    }
+
+    if (data.date_send === ISODateSmall(props.date_send)) {
+      data.date_send = "";
+    }
+
+    if (data.date_received === ISODateSmall(props.date_received)) {
+      data.date_received = "";
+    }
+    console.log(data);
+
     let Rescheck = await EditService(data);
     if (!!Rescheck) {
       handleClose();
@@ -78,7 +98,7 @@ export default function BasicModalPay(props: IDataService) {
               Pagemento do Cliente -&nbsp; <FaMoneyCheckDollar color="green" />
               <br />
               <span style={{ fontSize: "18px", fontWeight: "bold" }}>
-                {props.name} - {props.cpf}
+                {props.name} | {formatCPF(props.cpf)}
               </span>
             </Typography>
             <Button

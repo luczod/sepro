@@ -24,6 +24,7 @@ export interface IDataService {
   service_id: string;
   cliente_id: string;
   name: string;
+  cpf: string;
   date_send: string;
   charged: string;
   received: string;

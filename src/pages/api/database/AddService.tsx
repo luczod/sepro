@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { runQuery } from "../../../utils/db";
+import { HandlerInsert } from "../../../utils/cleanObj";
 
 export default async function handler(
   req: NextApiRequest,
@@ -7,19 +8,19 @@ export default async function handler(
 ) {
   // in sql ? means value.
   // in sql ?? means tables ou columns
+  const customData = req.body;
+  const [insertFields, placeholders, values] = HandlerInsert(customData);
+
   if (req.method === "POST") {
-    const SQLAdd = `INSERT INTO services (name, date_send, charged, received, date_received, onlyyear, obs)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    const result = await runQuery(SQLAdd, [
-      req.body.name,
-      req.body.date_send,
-      req.body.charged,
-      req.body.received,
-      req.body.date_received,
-      req.body.onlyYear,
-      req.body.obs,
-    ]);
-    console.log(result);
-    res.status(200).end();
+    const SQLAdd = `INSERT INTO services (${insertFields})
+                    VALUES (${placeholders});`;
+    const result = await runQuery(SQLAdd, values);
+
+    if (typeof result === "object") {
+      console.log(result);
+      res.status(200).end();
+    } else {
+      res.status(500).json({ Error: result });
+    }
   }
 }

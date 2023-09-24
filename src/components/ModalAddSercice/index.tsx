@@ -22,14 +22,20 @@ type VarError = {
   Error?: string;
 };
 
-async function AddService(objInput: { name: string }) {
+type dropList = {
+  label: string;
+  id: number;
+};
+
+async function AddService(objInput: IDataService) {
   console.log(objInput);
+  const { name, ...rest } = objInput;
 
   let queryService = await axios
-    .post("/api/database/AddService", objInput)
+    .post("/api/database/AddService", { ...rest })
     .then((resposta) => {
       console.log(resposta);
-      SucessRequest(objInput?.name + " Foi adcionado com Sucesso");
+      SucessRequest(name + ": serviço adicionado");
       return true;
     })
     .catch((err: AxiosError) => {
@@ -45,7 +51,7 @@ async function AddService(objInput: { name: string }) {
 
 export default function BasicModalAddService() {
   const [open, setOpen] = React.useState(false);
-  const [autoInput, setAutoInput] = React.useState<string | null>(null);
+  const [autoInput, setAutoInput] = React.useState<dropList | null>(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { register, handleSubmit } = useForm();
@@ -54,17 +60,19 @@ export default function BasicModalAddService() {
     inputValue: React.SyntheticEvent<Element, Event>,
     value: any
   ) {
-    const valor = value?.id;
+    const valor = value;
 
     if (valor) {
       setAutoInput(valor);
     } else {
-      setAutoInput("");
+      setAutoInput(null);
     }
   }
 
   async function InsertService(data: IDataService) {
-    data.cliente_id = autoInput;
+    data.cliente_id = String(autoInput.id);
+    data.name = autoInput.label;
+    console.log(data);
 
     let Rescheck = await AddService(data);
     if (!!Rescheck) {

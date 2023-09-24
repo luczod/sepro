@@ -8,5 +8,15 @@ export const MoneyToDouble = (valueData: string) => {
   let formated = valueData.replace(/\./, "");
   formated = formated.replace(/\,/, ".");
 
-  return Number(formated);
+  return formated;
 };
+
+export function fnISOnumber(valueCharged: string) {
+  // checked if has dot and comman
+  let checked = /^(?=.*?\.)(?=.*?\,)/.test(valueCharged);
+  let formated = checked
+    ? MoneyToDouble(valueCharged)
+    : valueCharged.replace(/\,/, ".");
+
+  return formated;
+}

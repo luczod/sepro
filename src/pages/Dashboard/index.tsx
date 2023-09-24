@@ -1,3 +1,4 @@
+require("dotenv").config();
 import React, { useEffect, useMemo, useState } from "react";
 import router from "next/router";
 import axios from "axios";
@@ -22,6 +23,8 @@ import { formatNumber } from "../../utils/formatNumber";
 type VarError = {
   Error?: string;
 };
+
+const internal = process.env.INTERNAL_HOST;
 let dataTable: IDataService[] | null = null;
 
 //compoennts
@@ -222,7 +225,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   let msg: string | null = null;
 
   const response = await axios
-    .get("http://localhost:3000/api/database/ListYear")
+    .get(internal + "api/database/ListYear")
     .then((result) => {
       return result.data;
     })
