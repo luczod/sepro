@@ -17,6 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ContainerLabel, Boxstyle } from "./styles";
 import { IDataService } from "../../utils/interfaces";
 import { ErrorRequest, SucessRequest } from "../../utils/MsgFlash";
+import { ISODateSmall } from "../../utils/sortDate";
 type VarError = {
   Error?: string;
 };
@@ -49,8 +50,11 @@ export default function BasicModalAddService() {
   const handleClose = () => setOpen(false);
   const { register, handleSubmit } = useForm();
 
-  function handlerChange(inputValue: React.ChangeEvent<HTMLInputElement>) {
-    const valor = inputValue.target.textContent;
+  function handlerChange(
+    inputValue: React.SyntheticEvent<Element, Event>,
+    value: any
+  ) {
+    const valor = value?.id;
 
     if (valor) {
       setAutoInput(valor);
@@ -60,7 +64,7 @@ export default function BasicModalAddService() {
   }
 
   async function InsertService(data: IDataService) {
-    data.name = autoInput;
+    data.cliente_id = autoInput;
 
     let Rescheck = await AddService(data);
     if (!!Rescheck) {
@@ -111,7 +115,9 @@ export default function BasicModalAddService() {
                         size={48}
                         required
                       /> */}
-                      <ComboBox isChange={(e) => handlerChange(e)} />
+                      <ComboBox
+                        isChange={(event, value) => handlerChange(event, value)}
+                      />
                     </div>
                   </label>
                   <label role="label">

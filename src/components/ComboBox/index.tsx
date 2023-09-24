@@ -2,9 +2,9 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import axios, { AxiosError } from "axios";
-import { GetServerSideProps } from "next/types";
 import { ErrorRequest } from "../../utils/MsgFlash";
 import Link from "next/link";
+import BasicModalAdd from "../CustomAdd";
 let listData: any[] | null;
 
 type VarError = {
@@ -54,7 +54,12 @@ export default function ComboBox({ isChange }: IProps) {
       options={!list ? [{ label: "Carregando..." }] : list}
       noOptionsText={
         <>
-          Sem opções&nbsp;<Link href={"/Customers"}>Adcionar</Link>
+          <div style={{ width: 300, display: "flex", flexDirection: "row" }}>
+            <span style={{ color: "Black", marginTop: "0.5rem" }}>
+              Sem opções&nbsp;
+            </span>
+            <BasicModalAdd />
+          </div>
         </>
       }
       sx={{ width: 500 }}

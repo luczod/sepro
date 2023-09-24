@@ -22,7 +22,7 @@ export const Container = styled.div<IContainerProps>`
     position: fixed;
     z-index: 2;
 
-    width: 170px;
+    width: 200px;
 
     height: ${(props) => (props.menuIsOpen ? "100vh" : "70px")};
     overflow: hidden;
@@ -65,7 +65,7 @@ export const ToggleMenu = styled.button`
   border-radius: 5px;
   font-size: 22px;
 
-  background-color: ${theme.colors.secondaryColor};
+  background-color: ${theme.colors.primaryColor};
   color: ${theme.colors.white};
 
   transition: opacity 0.3s;

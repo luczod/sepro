@@ -48,6 +48,10 @@ export default function BasicModalAdd() {
   const handleClose = () => setOpen(false);
   const { register, handleSubmit } = useForm();
 
+  function callTwofn() {
+    alert("okkkkkkkkk");
+  }
+
   async function UpdateUser(data: IDataCustomers) {
     if (data.cpf) {
       const cpfRaw = fnRawCPF(data.cpf);
@@ -63,7 +67,7 @@ export default function BasicModalAdd() {
   return (
     <div>
       <Tooltip title="Adcionar cliente" style={{ fontSize: "2.5vh" }}>
-        <Button onClick={handleOpen}>
+        <Button onClick={callTwofn}>
           <FaAddressBook />
         </Button>
       </Tooltip>
