@@ -18,6 +18,7 @@ import { ContainerLabel, Boxstyle } from "./styles";
 import { IDataService } from "../../utils/interfaces";
 import { ErrorRequest, SucessRequest } from "../../utils/MsgFlash";
 import { ISODateSmall } from "../../utils/sortDate";
+import { fnISOnumber } from "../../utils/formtMonet";
 type VarError = {
   Error?: string;
 };
@@ -73,6 +74,15 @@ export default function BasicModalAddService() {
     data.cliente_id = String(autoInput.id);
     data.name = autoInput.label;
     console.log(data);
+
+    // checked if has dot and comman
+    if (data.charged) {
+      data.charged = fnISOnumber(data.charged);
+    }
+
+    if (data.received) {
+      data.received = fnISOnumber(data.received);
+    }
 
     let Rescheck = await AddService(data);
     if (!!Rescheck) {

@@ -9,7 +9,7 @@ export default async function handler(
     const SQLquery = `SELECT s.service_id, c.name, c.cpf , s.date_send, s.charged, 
                       s.received,s.date_received,s.onlyyear,s.onlyyear FROM services s 
                       left JOIN customers c ON s.cliente_id = c.idclientes
-                      ORDER BY s.onlyyear DESC;`;
+                      ORDER BY s.date_send DESC;`;
     const result = await runQuery(SQLquery, []);
 
     if (Array.isArray(result)) {
