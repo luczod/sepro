@@ -37,10 +37,6 @@ interface Option {
   name: string;
 }
 
-interface AutocompleteInputProps {
-  options?: Option[];
-}
-
 const NoOptions = [
   {
     id: 1,
@@ -48,7 +44,7 @@ const NoOptions = [
   },
 ];
 
-const AutocompleteInput: React.FC<AutocompleteInputProps> = ({ options }) => {
+const AutocompleteInput: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState<Option[]>(listData);
   const [showDropdown, setShowDropdown] = useState(false);

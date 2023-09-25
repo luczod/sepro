@@ -7,6 +7,7 @@ import Modal from "@mui/material/Modal";
 import Tooltip from "@mui/material/Tooltip";
 import InputMask from "react-input-mask";
 import ComboBox from "../ComboBox";
+import AutocompleteInput from "../AutocompleteInput";
 import axios, { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { ErrorRequest, SucessRequest } from "../../utils/MsgFlash";
@@ -198,9 +199,10 @@ export default function BasicModalService(props: IDataService) {
                       alignItems: "center",
                     }}
                   >
-                    <ComboBox
+                    {/* <ComboBox
                       isChange={(event, value) => handlerChange(event, value)}
-                    />
+                    /> */}
+                    <AutocompleteInput />
                     <span onClick={handlerVisibility}>
                       <BasicModalAdd />
                     </span>

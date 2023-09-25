@@ -28,6 +28,7 @@ import { IDataService } from "../../utils/interfaces";
 import { ErrorRequest, SucessRequest } from "../../utils/MsgFlash";
 import { ISODateSmall } from "../../utils/sortDate";
 import { fnISOnumber } from "../../utils/formtMonet";
+import BasicModalAdd from "../CustomAdd";
 type VarError = {
   Error?: string;
 };
@@ -61,6 +62,7 @@ async function AddService(objInput: IDataService) {
 
 export default function BasicModalAddService() {
   const [open, setOpen] = React.useState(false);
+  const [show, setShow] = React.useState(true);
   const [autoInput, setAutoInput] = React.useState<dropList | null>(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -77,6 +79,10 @@ export default function BasicModalAddService() {
     } else {
       setAutoInput(null);
     }
+  }
+
+  function handlerVisibility() {
+    setShow(false);
   }
 
   async function InsertService(data: IDataService) {
@@ -145,7 +151,18 @@ export default function BasicModalAddService() {
                       {/* <ComboBox
                         isChange={(event, value) => handlerChange(event, value)}
                       /> */}
-                      <AutocompleteInput />
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
+                      >
+                        <AutocompleteInput />
+                        <span onClick={handlerVisibility}>
+                          <BasicModalAdd />
+                        </span>
+                      </div>
                     </div>
                   </label>
                   <label role="label">
