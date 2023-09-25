@@ -9,6 +9,15 @@ import InputMask from "react-input-mask";
 import axios, { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { FaAddressBook } from "react-icons/fa6";
+import AutocompleteInput from "../AutocompleteInput";
+
+const options = [
+  { id: 1, name: "Maçã" },
+  { id: 2, name: "Banana" },
+  { id: 3, name: "Cereja" },
+  { id: 4, name: "Abacaxi" },
+  // Adicione mais opções conforme necessário
+];
 
 //tost
 import "react-toastify/dist/ReactToastify.css";
@@ -133,9 +142,10 @@ export default function BasicModalAddService() {
                         size={48}
                         required
                       /> */}
-                      <ComboBox
+                      {/* <ComboBox
                         isChange={(event, value) => handlerChange(event, value)}
-                      />
+                      /> */}
+                      <AutocompleteInput />
                     </div>
                   </label>
                   <label role="label">
