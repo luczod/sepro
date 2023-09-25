@@ -9,6 +9,18 @@ type VarError = {
   Error?: string;
 };
 
+interface Option {
+  id: number;
+  name: string;
+}
+
+const NoOptions = [
+  {
+    id: 1,
+    name: "Sem opções",
+  },
+];
+
 async function ListAllCustomers() {
   let queryList = await axios
     .get("http://localhost:3000/api/database/ListCustomers")
@@ -31,18 +43,6 @@ async function getAllList() {
   return;
 }
 getAllList();
-
-interface Option {
-  id: number;
-  name: string;
-}
-
-const NoOptions = [
-  {
-    id: 1,
-    name: "Sem opções",
-  },
-];
 
 const AutocompleteInput: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
@@ -71,7 +71,7 @@ const AutocompleteInput: React.FC = () => {
       return null;
     }
     setInputValue(option.name);
-    console.log(option);
+    console.log(option.id);
     setShowDropdown(false);
   };
 

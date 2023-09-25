@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 export const DivInput = styled.div`
   > input {
-    width: 30rem;
+    width: 28rem;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;

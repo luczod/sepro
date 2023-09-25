@@ -4,20 +4,16 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Tooltip from "@mui/material/Tooltip";
-import ComboBox from "../ComboBox";
 import InputMask from "react-input-mask";
 import axios, { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { FaAddressBook } from "react-icons/fa6";
 import AutocompleteInput from "../AutocompleteInput";
-
-const options = [
-  { id: 1, name: "Maçã" },
-  { id: 2, name: "Banana" },
-  { id: 3, name: "Cereja" },
-  { id: 4, name: "Abacaxi" },
-  // Adicione mais opções conforme necessário
-];
+import {
+  DivInput,
+  DivContainer,
+  DivDropdown,
+} from "../AutocompleteInput/styles";
 
 //tost
 import "react-toastify/dist/ReactToastify.css";
@@ -33,11 +29,19 @@ type VarError = {
   Error?: string;
 };
 
-type dropList = {
-  label: string;
-  id: number;
-};
+let listData: any[] | null;
 
+interface Option {
+  id: number;
+  name: string;
+}
+
+const NoOptions = [
+  {
+    id: 1,
+    name: "Sem opções",
+  },
+];
 async function AddService(objInput: IDataService) {
   console.log(objInput);
   const { name, ...rest } = objInput;
@@ -60,24 +64,80 @@ async function AddService(objInput: IDataService) {
   return queryService;
 }
 
+async function ListAllCustomers() {
+  let queryList = await axios
+    .get("http://localhost:3000/api/database/ListCustomers")
+    .then((resposta) => {
+      return resposta.data;
+    })
+    .catch((err: AxiosError) => {
+      let msg: VarError = err.response.data;
+      ErrorRequest(msg.Error || JSON.stringify(err.cause));
+
+      return null;
+    });
+
+  return queryList;
+}
+
+async function getAllList() {
+  listData = await ListAllCustomers();
+
+  return;
+}
+getAllList();
+
 export default function BasicModalAddService() {
   const [open, setOpen] = React.useState(false);
   const [show, setShow] = React.useState(true);
-  const [autoInput, setAutoInput] = React.useState<dropList | null>(null);
+  const [list, setList] = React.useState<null | any[]>(listData);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { register, handleSubmit } = useForm();
 
-  function handlerChange(
-    inputValue: React.SyntheticEvent<Element, Event>,
-    value: any
-  ) {
-    const valor = value;
+  // autocompleteInpute
+  const [inputValue, setInputValue] = React.useState("");
+  const [inputValueID, setInputValueID] = React.useState<number | null>();
+  const [filteredOptions, setFilteredOptions] =
+    React.useState<Option[]>(listData);
+  const [showDropdown, setShowDropdown] = React.useState(false);
 
-    if (valor) {
-      setAutoInput(valor);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+
+    // Filtra as opções com base no valor de entrada
+    const filtered = listData.filter((option) =>
+      option.name.toLowerCase().includes(value.toLowerCase())
+    );
+
+    if (filtered.length > 0) {
+      setFilteredOptions(filtered);
     } else {
-      setAutoInput(null);
+      setFilteredOptions(NoOptions);
+      setInputValueID(null);
+    }
+    setShowDropdown(true);
+  };
+
+  const handleOptionClick = (option: Option) => {
+    if (option.name === "Sem opções") {
+      return null;
+    }
+    setInputValue(option.name);
+    setInputValueID(option.id);
+    setShowDropdown(false);
+  };
+
+  React.useEffect(() => {
+    setList(listData);
+  }, []);
+
+  function openInvisibily() {
+    setShow(true);
+    if (!open) {
+      handleClose();
+      handleOpen();
     }
   }
 
@@ -86,9 +146,12 @@ export default function BasicModalAddService() {
   }
 
   async function InsertService(data: IDataService) {
-    data.cliente_id = String(autoInput.id);
-    data.name = autoInput.label;
-    console.log(data);
+    if (!inputValueID) {
+      ErrorRequest("Escolha um cliente");
+      return null;
+    }
+    data.cliente_id = String(inputValueID);
+    data.name = inputValue;
 
     // checked if has dot and comman
     if (data.charged) {
@@ -140,17 +203,6 @@ export default function BasicModalAddService() {
                       Nome
                     </span>
                     <div className="input-group">
-                      {/*  <input
-                        {...register("name")}
-                        type="search"
-                        className="form-control"
-                        name="name"
-                        size={48}
-                        required
-                      /> */}
-                      {/* <ComboBox
-                        isChange={(event, value) => handlerChange(event, value)}
-                      /> */}
                       <div
                         style={{
                           display: "flex",
@@ -158,7 +210,39 @@ export default function BasicModalAddService() {
                           alignItems: "center",
                         }}
                       >
-                        <AutocompleteInput />
+                        <DivContainer>
+                          <DivInput>
+                            <input
+                              type="search"
+                              value={inputValue}
+                              onChange={handleInputChange}
+                              className="form-control"
+                              placeholder="Digite o nome do cliente..."
+                              required
+                            />
+                          </DivInput>
+
+                          {showDropdown && (
+                            <DivDropdown
+                              onBlurCapture={() => setShowDropdown(false)}
+                            >
+                              <ul>
+                                {filteredOptions.map((option) => (
+                                  <li
+                                    key={option.id}
+                                    onClick={() => handleOptionClick(option)}
+                                  >
+                                    {option.name === "Sem opções" ? (
+                                      option.name
+                                    ) : (
+                                      <span>{option.name}</span>
+                                    )}
+                                  </li>
+                                ))}
+                              </ul>
+                            </DivDropdown>
+                          )}
+                        </DivContainer>
                         <span onClick={handlerVisibility}>
                           <BasicModalAdd />
                         </span>
