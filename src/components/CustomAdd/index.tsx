@@ -8,6 +8,7 @@ import InputMask from "react-input-mask";
 import axios, { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { FaAddressBook } from "react-icons/fa6";
+import { ScrollBarBox } from "../InputDashboard/styles";
 
 //tost
 import "react-toastify/dist/ReactToastify.css";
@@ -15,6 +16,17 @@ import { ErrorRequest, SucessRequest } from "../../utils/MsgFlash";
 type VarError = {
   Error?: string;
 };
+
+const listAcc = [
+  {
+    cd: 1,
+    nome: "ECAC",
+  },
+  {
+    cd: 2,
+    nome: "GOV",
+  },
+];
 
 //iterfaces
 import { ContainerLabel, Boxstyle } from "./styles";
@@ -161,6 +173,17 @@ export default function BasicModalAdd() {
                         placeholder="Telefone 2"
                       />
                     </div>
+                  </label>
+                  <label role="label">
+                    <span>Codigo de acesso</span>
+
+                    <select className="form-control" {...register("ano")}>
+                      {listAcc?.map((option) => (
+                        <option key={option.cd} value={option.nome}>
+                          {option.nome}
+                        </option>
+                      ))}
+                    </select>
                   </label>
                 </ContainerLabel>
               </div>
