@@ -9,3 +9,15 @@ export const ContainerLabel = styled.div`
     }
   }
 `;
+
+export const styleBox = {
+  position: "relative",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 600,
+  bgcolor: "background.paper",
+  border: "1px solid #3a3535",
+  boxShadow: 6,
+  p: 4,
+};

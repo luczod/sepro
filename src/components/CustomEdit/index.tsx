@@ -16,25 +16,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 //iterfaces
 import { IDataCustomers } from "../../utils/interfaces";
-import { ContainerLabel } from "./styles";
-import { ISODateSmall } from "../../utils/sortDate";
+import { ContainerLabel, styleBox } from "./styles";
 import { fnRawCPF } from "../../utils/formatNumber";
 
 type VarError = {
   Error?: string;
-};
-
-const style = {
-  position: "relative",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 600,
-  height: 390,
-  bgcolor: "background.paper",
-  border: "1px solid #3a3535",
-  boxShadow: 6,
-  p: 4,
 };
 
 async function EditCustom(objInput: IDataCustomers) {
@@ -94,7 +80,7 @@ export default function BasicModalEdit(props: IDataCustomers) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={styleBox}>
           <form onSubmit={handleSubmit(UpdateUser)}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Editar Cliente&nbsp;
@@ -166,31 +152,57 @@ export default function BasicModalEdit(props: IDataCustomers) {
                   <label role="label">
                     <span>Telefone 1</span>
                     <div className="input-group">
-                      <input
+                      <InputMask
                         {...register("phoneOne")}
+                        mask="(99) 99999-9999"
                         type="search"
                         className="form-control"
                         name="phoneOne"
-                        placeholder={props.phoneOne}
+                        placeholder="Telefone 1"
                       />
                     </div>
                   </label>
                   <label role="label">
                     <span>Telefone 2</span>
                     <div className="input-group">
-                      <input
+                      <InputMask
                         {...register("phoneTwo")}
+                        mask="(99) 9999-9999"
                         type="search"
                         className="form-control"
                         name="phoneTwo"
-                        placeholder={props.phoneTwo}
+                        placeholder="Telefone 2"
+                      />
+                    </div>
+                  </label>
+                  <label role="label">
+                    <span>Código do acesso</span>
+                    <div className="input-group">
+                      <input
+                        {...register("cdacess")}
+                        type="search"
+                        className="form-control"
+                        name="cdacess"
+                        placeholder="ECAC: 0000000"
+                      />
+                    </div>
+                  </label>
+                  <label role="label">
+                    <span>Senha</span>
+                    <div className="input-group">
+                      <input
+                        {...register("cdpass")}
+                        type="search"
+                        className="form-control"
+                        name="cdpass"
+                        placeholder="senha"
                       />
                     </div>
                   </label>
                 </ContainerLabel>
               </div>
             </Typography>
-            <hr />
+            <hr style={{ paddingBottom: "1rem" }} />
             <Button
               className="btn btn-primary"
               type="submit"

@@ -175,15 +175,28 @@ export default function BasicModalAdd() {
                     </div>
                   </label>
                   <label role="label">
-                    <span>Codigo de acesso</span>
-
-                    <select className="form-control" {...register("ano")}>
-                      {listAcc?.map((option) => (
-                        <option key={option.cd} value={option.nome}>
-                          {option.nome}
-                        </option>
-                      ))}
-                    </select>
+                    <span>Código do acesso</span>
+                    <div className="input-group">
+                      <input
+                        {...register("cdacess")}
+                        type="search"
+                        className="form-control"
+                        name="cdacess"
+                        placeholder="ECAC: 0000000"
+                      />
+                    </div>
+                  </label>
+                  <label role="label">
+                    <span>Senha</span>
+                    <div className="input-group">
+                      <input
+                        {...register("cdpass")}
+                        type="search"
+                        className="form-control"
+                        name="cdpass"
+                        placeholder="senha"
+                      />
+                    </div>
                   </label>
                 </ContainerLabel>
               </div>

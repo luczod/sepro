@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     const SQLquery =
-      "SELECT c.idclientes, c.name,c.cpf,c.birthdate, c.phoneOne , c.phoneTwo FROM customers c";
+      "SELECT c.idclientes,c.cdacess, c.cdpass, c.name,c.cpf,c.birthdate, c.phoneOne , c.phoneTwo FROM customers c";
     const result = await runQuery(SQLquery, []);
 
     if (Array.isArray(result)) {

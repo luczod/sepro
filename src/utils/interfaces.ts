@@ -2,6 +2,8 @@ export interface IDataCustomers {
   idclientes: string;
   name: string;
   cpf: string;
+  cdacess: string;
+  cdpass: string;
   birthdate: string;
   phoneOne: string;
   phoneTwo: string;

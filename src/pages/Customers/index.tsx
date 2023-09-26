@@ -45,6 +45,19 @@ const columnsTop = [
     maxWidth: "165px",
     sortable: false,
   },
+
+  {
+    name: "Acesso",
+    selector: (row: IDataCustomers) => row.cdacess,
+    maxWidth: "200px",
+    sortable: false,
+  },
+  {
+    name: "Senha",
+    selector: (row: IDataCustomers) => row.cdpass,
+    maxWidth: "165px",
+    sortable: false,
+  },
   {
     name: "DATA DE NASC.",
     selector: (row: IDataCustomers) => ISOtoDateBr(row.birthdate),
