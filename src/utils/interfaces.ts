@@ -22,6 +22,7 @@ export interface IReports {
   total: number;
   pagos: number;
   pendentes: number;
+  ano: number;
 }
 
 export interface IListCpf {

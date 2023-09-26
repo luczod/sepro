@@ -8,7 +8,7 @@ import { FaSistrix } from "react-icons/fa6";
 import "react-toastify/dist/ReactToastify.css";
 
 //pages function
-import { loadTableNome } from "../../pages/Dashboard";
+import { loadTableNome, loadcardBox } from "../../pages/Dashboard";
 import { listAllService } from "../../pages/Dashboard";
 
 //styles
@@ -16,7 +16,7 @@ import { Header } from "./styles";
 import { Input, ScrollBarBox } from "./styles";
 
 //tipagem
-import { IListYear, IDataService } from "../../utils/interfaces";
+import { IListYear, IDataService, IReports } from "../../utils/interfaces";
 import { ErrorRequest } from "../../utils/MsgFlash";
 import { fnRawCPF } from "../../utils/formatNumber";
 interface IProps {
@@ -25,7 +25,7 @@ interface IProps {
 
 //variables
 let ResDb: IDataService[];
-let resDbList: IListYear[];
+let ResReports: IReports;
 type ErrVar = {
   Erro?: string;
   code?: string;
@@ -61,6 +61,22 @@ async function FilterYear(yearinput: string) {
     });
 
   return queryServices;
+}
+
+async function FilterReports(yearinput: string) {
+  let queryReports = await axios
+    .post("api/database/reports/local", { ano: yearinput })
+    .then((resposta) => {
+      // console.log(resposta.data);
+      return resposta.data;
+    })
+    .catch((err: AxiosError) => {
+      let varErr: ErrVar = err?.response?.data || err.cause;
+      ErrorRequest(varErr.Erro || JSON.stringify(varErr));
+      return null;
+    });
+
+  return queryReports;
 }
 
 // componente funcional "React.FC"
@@ -113,16 +129,23 @@ export default function SubHeader({ listYear }: IProps) {
     console.log("SearchYear");
 
     ResDb = await FilterYear(data.ano);
+    ResReports = await FilterReports(data.ano);
 
     if (!ResDb) {
       console.log(ResDb);
-      setLoadbtn2(false);
     } else {
       // console.log("resDb ", ResDb[0]);
       loadTableNome(ResDb);
-      setLoadbtn2(false);
-      router.push("/Dashboard");
     }
+
+    if (!ResReports) {
+      console.log(ResReports);
+    } else {
+      // console.log("resDb ", ResDb[0]);
+      loadcardBox(ResReports);
+    }
+    setLoadbtn2(false);
+    router.push("/Dashboard");
     return;
   }
 

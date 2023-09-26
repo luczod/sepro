@@ -181,6 +181,14 @@ export const loadTableNome = async (textinput: IDataService[] | null) => {
   return;
 };
 
+export const loadcardBox = async (textinput: IReports | null) => {
+  if (dataReport) {
+    dataReport = null;
+  }
+  dataReport = textinput;
+  return;
+};
+
 const downloadExcel = () => {
   handleDownloadExcel(dataTable, "planilha1", "clientes");
 };
@@ -191,9 +199,6 @@ export default function PageDashboard({
   listReports,
   errorReports,
 }) {
-  const [dataEntry, setdataEntry] = useState();
-  const [performed, setPerformed] = useState();
-
   if (errorList) {
     ErrorRequest(errorList);
   }
@@ -211,12 +216,6 @@ export default function PageDashboard({
   });
 
   useEffect(() => {
-    const calcCard = async () => {
-      let QtydataCard = await QtylistAll();
-    };
-  }, []);
-
-  useEffect(() => {
     listAllService();
   }, []);
   return (
@@ -226,7 +225,7 @@ export default function PageDashboard({
       </Head>
       <Content>
         <CardBox color="white" titulo="Total" amount={listReports} />
-        <CardBox color="white" titulo="Presente" amount={dataReport} />
+        <CardBox color="white" titulo="Ano" amount={dataReport} />
       </Content>
       <br />
       <SubHeader listYear={list} />

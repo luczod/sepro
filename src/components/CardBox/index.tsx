@@ -14,9 +14,18 @@ interface ICardBoxProps {
 const CardBox: React.FC<ICardBoxProps> = ({ titulo, color, amount }) => {
   return (
     <Container color={color}>
-      <div>
-        <span>{titulo}</span>
-      </div>
+      {amount?.ano ? (
+        <div>
+          <span>
+            {titulo}&nbsp;{amount.ano}
+          </span>
+        </div>
+      ) : (
+        <div>
+          <span>{titulo}</span>
+        </div>
+      )}
+
       {amount && (
         <>
           <h5>Pagos:&nbsp;{amount.pagos}</h5>
