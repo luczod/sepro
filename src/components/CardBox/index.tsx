@@ -1,23 +1,29 @@
 import React from "react";
 
 import { Container } from "./styles";
+import { IReports } from "../../utils/interfaces";
+import formatCurrency from "../../utils/formatCurrency";
 
 interface ICardBoxProps {
   titulo: string;
   footerlabel?: string;
+  amount: IReports;
   color: string;
 }
 
-const CardBox: React.FC<ICardBoxProps> = ({ titulo, color }) => {
+const CardBox: React.FC<ICardBoxProps> = ({ titulo, color, amount }) => {
   return (
     <Container color={color}>
       <div>
         <span>{titulo}</span>
       </div>
-
-      <h5>Pendentes:</h5>
-      <h5>Pagos:</h5>
-      <h5>Total:</h5>
+      {amount && (
+        <>
+          <h5>Pagos:&nbsp;{amount.pagos}</h5>
+          <h5>Pendentes:&nbsp;{amount.pendentes}</h5>
+          <h5>Total:&nbsp;{formatCurrency(amount.total)}</h5>
+        </>
+      )}
 
       {/* <small>{footerlabel}</small>
       <img src={iconSelected} alt={titulo} /> */}

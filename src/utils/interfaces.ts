@@ -18,6 +18,12 @@ export interface IDataIR {
   dataValor: string;
 }
 
+export interface IReports {
+  total: number;
+  pagos: number;
+  pendentes: number;
+}
+
 export interface IListCpf {
   cpf: string;
 }

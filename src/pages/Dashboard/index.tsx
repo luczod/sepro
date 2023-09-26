@@ -14,7 +14,7 @@ import { Content } from "../../styles/stylesDashboard";
 import "react-toastify/dist/ReactToastify.css";
 
 //types
-import { IDataService, IListYear } from "../../utils/interfaces";
+import { IDataService, IListYear, IReports } from "../../utils/interfaces";
 import {
   convertToDate1,
   convertToDate2,
@@ -27,6 +27,7 @@ type VarError = {
 
 const internal = process.env.INTERNAL_HOST;
 let dataTable: IDataService[] | null = null;
+let dataReport: IReports | null = null;
 
 //compoennts
 import SubHeader from "../../components/InputDashboard";
@@ -123,11 +124,39 @@ export async function loadTableService() {
   return queryService;
 }
 
+export async function loadReports() {
+  const currentyDate = new Date();
+  let year = currentyDate.getFullYear();
+
+  let queryService = await axios
+    .post("/api/database/reports/local", {
+      ano: year,
+    })
+    .then((resposta) => {
+      // console.log(resposta.data);
+      return resposta.data;
+    })
+    .catch((err: AxiosError) => {
+      ErrorRequest(err.message);
+      return null;
+    });
+
+  return queryService;
+}
+
 export const listAllService = async () => {
   dataTable = await loadTableService();
 
+  dataReport = await loadReports();
+  console.log(dataReport);
+
   if (!dataTable) {
     console.log(dataTable);
+    return;
+  }
+
+  if (!dataReport) {
+    console.log(dataReport);
     return;
   }
   router.push("/Dashboard");
@@ -156,12 +185,21 @@ const downloadExcel = () => {
   handleDownloadExcel(dataTable, "planilha1", "clientes");
 };
 
-export default function PageDashboard({ list, errorList }) {
+export default function PageDashboard({
+  list,
+  errorList,
+  listReports,
+  errorReports,
+}) {
   const [dataEntry, setdataEntry] = useState();
   const [performed, setPerformed] = useState();
 
   if (errorList) {
     ErrorRequest(errorList);
+  }
+
+  if (errorReports) {
+    ErrorRequest(errorReports);
   }
 
   const dataTableFilter = dataTable?.map((item) => {
@@ -187,8 +225,8 @@ export default function PageDashboard({ list, errorList }) {
         <title>Dashboard</title>
       </Head>
       <Content>
-        <CardBox color="white" titulo="Total" />
-        {/* <CardBox color="white" titulo="Presente" amount={90} /> */}
+        <CardBox color="white" titulo="Total" amount={listReports} />
+        <CardBox color="white" titulo="Presente" amount={dataReport} />
       </Content>
       <br />
       <SubHeader listYear={list} />
@@ -224,6 +262,7 @@ export default function PageDashboard({ list, errorList }) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   let msg: string | null = null;
+  let msg2: string | null = null;
 
   const response = await axios
     .get(internal + "api/database/ListYear")
@@ -241,10 +280,28 @@ export const getServerSideProps: GetServerSideProps = async () => {
       }
     });
 
+  const responseReports = await axios
+    .get(internal + "api/database/reports/total")
+    .then((result) => {
+      return result.data;
+    })
+    .catch((err) => {
+      let varErr: VarError = err.response?.data || err.cause;
+      if (err.message === "Unauthorized") {
+        msg2 = "Sessão encerrada";
+        return null;
+      } else {
+        msg2 = varErr.Error || JSON.stringify(varErr);
+        return null;
+      }
+    });
+
   return {
     props: {
       list: response,
       errorList: msg,
+      listReports: responseReports,
+      errorReports: msg2,
     },
   };
 };
