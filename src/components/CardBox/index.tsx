@@ -4,17 +4,20 @@ import { Container } from "./styles";
 
 interface ICardBoxProps {
   titulo: string;
-  amount: number | string;
   footerlabel?: string;
   color: string;
 }
 
-const CardBox: React.FC<ICardBoxProps> = ({ titulo, amount, color }) => {
+const CardBox: React.FC<ICardBoxProps> = ({ titulo, color }) => {
   return (
     <Container color={color}>
-      <span>{titulo}</span>
+      <div>
+        <span>{titulo}</span>
+      </div>
 
-      <h1>{amount}</h1>
+      <h5>Pendentes:</h5>
+      <h5>Pagos:</h5>
+      <h5>Total:</h5>
 
       {/* <small>{footerlabel}</small>
       <img src={iconSelected} alt={titulo} /> */}

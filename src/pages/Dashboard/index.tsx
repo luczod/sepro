@@ -10,6 +10,7 @@ import { FaFileArrowDown } from "react-icons/fa6";
 import { Tooltip } from "@mui/material";
 import { formatCPF } from "../../utils/formatNumber";
 import { GetServerSideProps } from "next/types";
+import { Content } from "../../styles/stylesDashboard";
 import "react-toastify/dist/ReactToastify.css";
 
 //types
@@ -185,10 +186,10 @@ export default function PageDashboard({ list, errorList }) {
       <Head>
         <title>Dashboard</title>
       </Head>
-      {/*   <Content>
-        <CardBox color="white" titulo="Restituições Pendentes" amount={45} />
-        <CardBox color="white" titulo="Restituições Efetuadas" amount={90} />
-      </Content> */}
+      <Content>
+        <CardBox color="white" titulo="Total" />
+        {/* <CardBox color="white" titulo="Presente" amount={90} /> */}
+      </Content>
       <br />
       <SubHeader listYear={list} />
       <br />

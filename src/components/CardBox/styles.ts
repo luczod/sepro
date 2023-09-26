@@ -44,10 +44,14 @@ export const Container = styled.div<IContainerProps>`
 
     opacity: 0.3;
   }
-
-  > span {
-    font-size: 22px;
-    font-weight: 500;
+  > div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    > span {
+      font-size: 22px;
+      font-weight: 500;
+    }
   }
 
   > small {
