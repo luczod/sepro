@@ -17,7 +17,7 @@ import { Header } from "./styles";
 import { Input } from "./styles";
 
 //tipagem
-import { IDataCustumers, IDataIR } from "../../utils/interfaces";
+import { IDataCustomers, IDataIR } from "../../utils/interfaces";
 interface IProps {
   links: string;
 }

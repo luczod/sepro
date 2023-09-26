@@ -20,7 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ConfirmToast } from "../ConfirmToastBox/indext";
 
 //iterfaces
-import { IDataCustumers, IDados } from "../../utils/interfaces";
+import { IDataCustomers, IDados } from "../../utils/interfaces";
 import { ErrorRequest, SucessRequest } from "../../utils/MsgFlash";
 type VarError = {
   Erro?: string;
@@ -81,7 +81,7 @@ const searchToken = async (valueCPF: string) => {
   return queryAuth;
 };
 
-export default function BasicModalSepro(props: IDataCustumers) {
+export default function BasicModalSepro(props: IDataCustomers) {
   const [open, setOpen] = React.useState(false);
   const [dados, setDados] = React.useState<IDados[] | null>(null);
   const handleOpen = () => setOpen(true);

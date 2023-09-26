@@ -15,7 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 
 //iterfaces
-import { IDataCustumers } from "../../utils/interfaces";
+import { IDataCustomers } from "../../utils/interfaces";
 import { ErrorRequest, SucessRequest } from "../../utils/MsgFlash";
 type VarError = {
   Error?: string;
@@ -42,7 +42,7 @@ async function DeleteCustom(objInput: {}) {
   return queryCustomers;
 }
 
-export default function BasicModalDelete(props: IDataCustumers) {
+export default function BasicModalDelete(props: IDataCustomers) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
