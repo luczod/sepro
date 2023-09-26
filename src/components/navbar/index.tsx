@@ -25,10 +25,10 @@ export default function NavBar({ user }: IProps) {
           <div id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <h5>{user}</h5>
+                <h5>Bem-vindo(a)&nbsp;</h5>
               </li>
               <li className="nav-item">
-                <h5>&nbsp;Bem-vindo(a)</h5>
+                <h5>{user}&nbsp;</h5>
               </li>
             </ul>
           </div>
