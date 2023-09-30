@@ -7,7 +7,7 @@ const base64EncryptedData =
 
 function normalizeWord(word: string): string {
   word = word
-    .normalize("NFD") // Normalizar caracteres Unicode (acentos)
+    ?.normalize("NFD") // Normalizar caracteres Unicode (acentos)
     .replace(/[\u0300-\u036f]/g, ""); // Remover caracteres acentuados
   // Substituir 'ç' por 'c'
   word = word.replace(/ç/g, "c");

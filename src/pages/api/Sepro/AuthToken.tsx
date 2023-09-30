@@ -12,7 +12,7 @@ const cnpj = process.env.CNPJ;
 export default async function handler(req: Request, res: Response) {
   const token = await GetBearerTokenSerpro();
   const cpf = req.body.cpf;
-  // console.log(cpf);
+  console.log(token);
 
   const Config = {
     headers: {
@@ -29,7 +29,7 @@ export default async function handler(req: Request, res: Response) {
       res.status(200).json(ObjResposta.autorizacoes[0]);
     })
     .catch((err: AxiosError) => {
-      console.log(getDateLog() + err.response?.status || err.cause);
+      console.log(getDateLog() + "AQUI" + err.response?.status || err.cause);
 
       res
         .status(err.response?.status || 500)

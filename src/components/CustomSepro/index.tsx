@@ -30,6 +30,7 @@ type VarError = {
 import { theme } from "../../styles/theme";
 import { DivLoading, styleBox, DivDados } from "./styles";
 import { styleModalBody, DivList, styleBtnClose } from "./styles";
+import { RsaToSting } from "../../utils/RSAfn";
 
 async function getDataRestituiton(AuthToken: string) {
   let querySepro = await axios
@@ -43,13 +44,14 @@ async function getDataRestituiton(AuthToken: string) {
     .catch((err: AxiosError) => {
       console.log(getDateLog() + err.message);
       let varErr: VarError = err?.response?.data || err.cause;
+      let StatusErr = err.response?.status || "500";
       console.log(getDateLog() + " 74", varErr);
       if (err.message === "Unauthorized") {
         ErrorRequest("Sessão encerrada");
-        return null;
+        return false;
       } else {
-        ErrorRequest(varErr?.Erro || "500 " + JSON.stringify(varErr));
-        return null;
+        ErrorRequest(StatusErr + ":" + JSON.stringify(varErr));
+        return false;
       }
     });
   return querySepro;
@@ -69,14 +71,14 @@ const searchToken = async (valueCPF: string) => {
 
       let varErr: VarError = err?.response?.data || err.cause;
       let StatusErr = err.response?.status || "500";
-      console.log(getDateLog() + err.message);
-      if (err.message === "Unauthorized") {
-        ErrorRequest("Sessão encerrada");
-        return false;
-      } else {
+      console.log(getDateLog() + "ROW AQUI" + err.message);
+
+      ErrorRequest(err.message);
+      return false;
+      /* } else {
         ErrorRequest(varErr?.Erro || JSON.stringify(varErr));
         return false;
-      }
+      } */
     });
   return queryAuth;
 };
@@ -87,7 +89,6 @@ export default function BasicModalSepro(props: IDataCustomers) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [loading, setLoading] = React.useState(false);
-  const { asPath } = useRouter();
 
   async function CallTwoFn() {
     /* checked if has dot and comman
@@ -100,15 +101,32 @@ export default function BasicModalSepro(props: IDataCustomers) {
       setLoading(true);
       let ResSearch = await searchToken(formated);
       if (!ResSearch) {
-        handleClose();
         setLoading(false);
+        handleClose();
         return;
       }
       let DataSepro = await getDataRestituiton(ResSearch);
-      setDados(DataSepro);
+
+      if (DataSepro) {
+        const dadosDecrypt = DataSepro;
+        for (let i in dadosDecrypt) {
+          dados[i].codigo = RsaToSting(dados[i].codigo);
+          dados[i].texto = RsaToSting(dados[i].texto);
+          dados[i].valor = RsaToSting(dados[i].valor);
+        }
+
+        setLoading(false);
+        setDados(dadosDecrypt);
+        return;
+      } else {
+        setLoading(false);
+        handleClose();
+        return;
+      }
     } else {
       ErrorRequest("CPF Inválido");
     }
+
     // let checked = /^(?=.*?\.)(?=.*?\-)/.test(props.cpf);
 
     return;
