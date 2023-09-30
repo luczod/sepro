@@ -188,6 +188,10 @@ export const ChangeRowDash = async (obj: IDataService) => {
     return Number(object.service_id) === Number(service_id);
   });
   dataTable[index] = { ...dataTable[index], ...newObj };
+  console.log(newObj);
+  console.log(dataTable[index]);
+
+  console.log(dataTable[index].onlyyear);
 
   // dataTable[service_id].received = newObj.received;
   // dataTable[index].andamentodesc = desc;

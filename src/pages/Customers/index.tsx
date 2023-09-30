@@ -117,6 +117,9 @@ export const listAll = async () => {
 };
 
 export const loadTableNome = async (textinput: IDataCustomers[] | null) => {
+  if (dataTable.length > 0) {
+    dataTable.length = 0;
+  }
   dataTable = textinput;
   return;
 };
@@ -128,8 +131,11 @@ export const ChangeRowCustom = async (obj: IDataCustomers) => {
     return Number(object.idclientes) === Number(idclientes);
   });
   dataTable[index] = { ...dataTable[index], ...newObj };
+  console.log(newObj);
+  console.log(dataTable[index]);
+
   console.log(dataTable[index].cdpass);
-  router.push("/Customers");
+
   // dataTable[service_id].received = newObj.received;
   // dataTable[index].andamentodesc = desc;
   return;
@@ -140,6 +146,7 @@ const downloadExcel = () => {
 };
 
 export default function PageCustomers() {
+  const dataTableFilter = dataTable;
   useEffect(() => {
     listAll();
   }, []);
@@ -148,7 +155,7 @@ export default function PageCustomers() {
       <Head>
         <title>Clientes</title>
       </Head>
-      <SubHeader links="/Customers" />
+      <SubHeader />
 
       {!!dataTable ? (
         <>

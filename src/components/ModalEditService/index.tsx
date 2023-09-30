@@ -156,6 +156,8 @@ export default function BasicModalService(props: IDataService) {
     }
 
     let Rescheck = await EditService(data);
+    // let Rescheck = true;
+
     if (!!Rescheck) {
       await ChangeRowDash(data);
       router.push("/Dashboard");
@@ -274,11 +276,11 @@ export default function BasicModalService(props: IDataService) {
                     <span>Ano</span>
                     <div className="input-group">
                       <InputMask
-                        {...register("onlyYear")}
+                        {...register("onlyyear")}
                         mask="9999"
                         type="text"
                         className="form-control"
-                        name="onlyYear"
+                        name="onlyyear"
                         size={2}
                         placeholder={props.onlyyear}
                       />

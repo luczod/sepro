@@ -61,8 +61,8 @@ export default function BasicModalEdit(props: IDataCustomers) {
 
     if (!!Rescheck) {
       await ChangeRowCustom(data);
+      router.push("/Customers");
       handleClose();
-      SucessRequest(" Foi editado com Sucesso");
     }
   }
 

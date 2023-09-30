@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { FaSistrix } from "react-icons/fa6";
 import { AxiosError } from "axios";
-import { useMutation } from "react-query";
 import { ErrorRequest } from "../../utils/MsgFlash";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,8 +26,7 @@ interface IProps {
 
 //variables
 let ResDb: IDataCustomers[];
-let remoteProtocolo: string | null = null;
-let selectElement: HTMLInputElement;
+
 type ErrVar = {
   Erro?: string;
   code?: string;
@@ -49,18 +47,13 @@ async function loadTable(nameinput: string, rota: string) {
   return queryCustomers;
 }
 
-export const remoteInput = async (textinput: string) => {
-  remoteProtocolo = textinput;
-  return;
-};
-
 // componente funcional "React.FC"
 // tipando o children como um node do react
 // checa o que tem entre as tags do componets
-const SubHeader: React.FC<IProps> = ({ links }) => {
-  const router = useRouter();
-  const { register, handleSubmit } = useForm();
+export default function SubHeaderCustom() {
   const [loadbtn2, setLoadbtn2] = useState<boolean>(false);
+  const { register, handleSubmit } = useForm();
+  const router = useRouter();
 
   async function SearchNome(data: { Nome: string }) {
     setLoadbtn2(true);
@@ -86,7 +79,7 @@ const SubHeader: React.FC<IProps> = ({ links }) => {
       // console.log("resDb ", ResDb[0]);
       loadTableNome(ResDb);
       setLoadbtn2(false);
-      router.push(links);
+      router.push("/Customers");
     }
     return;
   }
@@ -133,6 +126,4 @@ const SubHeader: React.FC<IProps> = ({ links }) => {
       <ToastContainer style={{ fontSize: 18 }} />
     </>
   );
-};
-
-export default SubHeader;
+}
