@@ -1,5 +1,6 @@
 import * as forge from "node-forge";
 import * as fs from "fs";
+import { IDados } from "./interfaces";
 
 // Dados criptografados em formato base64
 const base64EncryptedData =
@@ -7,7 +8,7 @@ const base64EncryptedData =
 
 function normalizeWord(word: string): string {
   word = word
-    ?.normalize("NFD") // Normalizar caracteres Unicode (acentos)
+    .normalize("NFD") // Normalizar caracteres Unicode (acentos)
     .replace(/[\u0300-\u036f]/g, ""); // Remover caracteres acentuados
   // Substituir 'ç' por 'c'
   word = word.replace(/ç/g, "c");
@@ -16,7 +17,7 @@ function normalizeWord(word: string): string {
 
 export async function RsaToSting(inputValor: string) {
   // openssl x509 -inform der -in certificate.cer -out certificate.pem
-  // -----BEGIN RSA PRIVATE KEY----------END RSA PRIVATE KEY-----
+  // -----BEGIN RSA PRIVATE KEY----- -----END RSA PRIVATE KEY-----
   const privateKeyPem = fs.readFileSync(
     "D:\\serpro\\inicial\\chave-privada.pem",
     "utf8"
@@ -44,3 +45,14 @@ export async function RsaToSting(inputValor: string) {
   }
 }
 RsaToSting(base64EncryptedData);
+
+export async function RsaInArray(dadosDecrypt: IDados[]) {
+  const dados = dadosDecrypt;
+  for (let i in dadosDecrypt) {
+    dados[i].codigo = await RsaToSting(dados[i].codigo);
+    dados[i].texto = await RsaToSting(dados[i].texto);
+    dados[i].valor = await RsaToSting(dados[i].valor);
+  }
+
+  return dados;
+}

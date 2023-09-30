@@ -1,5 +1,4 @@
 import * as React from "react";
-import Router from "next/router";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -7,13 +6,8 @@ import Modal from "@mui/material/Modal";
 import Tooltip from "@mui/material/Tooltip";
 import DenseTable from "../DenseTable/intex";
 import axios, { AxiosError } from "axios";
-import { useRouter } from "next/router";
 import { getDateLog } from "../../utils/MsgFlash";
-import {
-  FaMagnifyingGlassDollar,
-  FaX,
-  FaFileInvoiceDollar,
-} from "react-icons/fa6";
+import { FaMagnifyingGlassDollar, FaX } from "react-icons/fa6";
 
 //tost
 import "react-toastify/dist/ReactToastify.css";
@@ -30,7 +24,6 @@ type VarError = {
 import { theme } from "../../styles/theme";
 import { DivLoading, styleBox, DivDados } from "./styles";
 import { styleModalBody, DivList, styleBtnClose } from "./styles";
-import { RsaToSting } from "../../utils/RSAfn";
 
 async function getDataRestituiton(AuthToken: string) {
   let querySepro = await axios
@@ -107,15 +100,8 @@ export default function BasicModalSepro(props: IDataCustomers) {
       let DataSepro = await getDataRestituiton(ResSearch);
 
       if (DataSepro) {
-        const dadosDecrypt = DataSepro;
-        for (let i in dadosDecrypt) {
-          dados[i].codigo = await RsaToSting(dados[i].codigo);
-          dados[i].texto = await RsaToSting(dados[i].texto);
-          dados[i].valor = await RsaToSting(dados[i].valor);
-        }
-
         setLoading(false);
-        setDados(dadosDecrypt);
+        setDados(DataSepro);
         return;
       } else {
         setLoading(false);

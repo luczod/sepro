@@ -5,6 +5,7 @@ import { getDateLog } from "../../../utils/MsgFlash";
 import { IRestituition } from "../../../utils/interfaces";
 import { GetBearerTokenSerpro } from "../../../utils/getToken";
 import InsertIR from "../../../utils/InsertRestituition";
+import { RsaInArray } from "../../../utils/RSAfn";
 // env
 let ObjResposta: IRestituition;
 
@@ -24,8 +25,11 @@ export default async function handler(req: Request, res: Response) {
       // handle success
       ObjResposta = resposta.data;
       InsertIR(ObjResposta);
+
+      RsaInArray(ObjResposta.dados).then((dados) => {
+        res.status(200).json(dados);
+      });
       // console.log(resposta.config);
-      res.status(200).json(ObjResposta.dados);
     })
     .catch((err: AxiosError) => {
       console.log(getDateLog() + err.response?.status || err.cause);
