@@ -6,12 +6,14 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const ano = req.body.ano;
-  const SQLquery = `SELECT sum(s.received) AS total,count(s.received) AS pagos,
+  const SQLquery = `SELECT sum(s.received) AS totalRec, count(s.received) AS pagos,
                     (SELECT count(s.service_id) FROM services s
-                    WHERE s.received IS NULL AND s.onlyyear = ${ano}) AS pendentes, 
+                    WHERE s.received IS NULL AND s.onlyyear = ${ano}) AS pendentes,
+                    (SELECT sum(s.charged) FROM services s
+                    WHERE s.received IS NULL AND s.onlyyear = ${ano}) AS totalPen,
                     s.onlyyear  as ano
                     FROM services s
-                    WHERE s.charged IS NOT NULL 
+                    WHERE s.received IS NOT NULL 
                     AND s.onlyyear = ${ano};`;
   const result = await runQuery(SQLquery, []);
 

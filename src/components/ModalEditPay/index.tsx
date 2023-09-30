@@ -79,7 +79,7 @@ export default function BasicModalPay(props: IDataService) {
     <div>
       <Tooltip title="Pagamento" style={{ fontSize: "2.5vh" }}>
         <Button className="btn btn-outline-light" onClick={handleOpen}>
-          {props.date_received ? (
+          {props.received ? (
             <FaMoneyCheckDollar size={22} color="Green" />
           ) : (
             <FaMoneyCheckDollar size={22} color="Red" />

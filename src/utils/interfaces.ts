@@ -19,7 +19,8 @@ export interface IDataIR {
 }
 
 export interface IReports {
-  total: number;
+  totalRec: number;
+  totalPen: number;
   pagos: number;
   pendentes: number;
   ano: number;

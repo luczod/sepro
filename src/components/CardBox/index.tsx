@@ -30,7 +30,18 @@ const CardBox: React.FC<ICardBoxProps> = ({ titulo, color, amount }) => {
         <>
           <h5>Pagos:&nbsp;{amount.pagos}</h5>
           <h5>Pendentes:&nbsp;{amount.pendentes}</h5>
-          <h5>Total:&nbsp;{amount.total && formatCurrency(amount.total)}</h5>
+          <h5>
+            Total Recebido:&nbsp;
+            {amount.totalRec
+              ? formatCurrency(amount.totalRec)
+              : formatCurrency(0)}
+          </h5>
+          <h5>
+            Total à Receber:&nbsp;
+            {amount.totalPen
+              ? formatCurrency(amount.totalPen)
+              : formatCurrency(0)}
+          </h5>
         </>
       )}
 
