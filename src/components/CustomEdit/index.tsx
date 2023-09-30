@@ -60,13 +60,14 @@ export default function BasicModalEdit(props: IDataCustomers) {
       data.cpf = cpfRaw;
     }
 
-    // let Rescheck = await EditCustom(data);
-    let Rescheck = true;
+    let Rescheck = await EditCustom(data);
+    // let Rescheck = true;
 
     if (!!Rescheck) {
       const newTable = await ChangeRowCustom(data);
       loadTableNome(newTable);
       router.push("/Customers");
+      SucessRequest("Editado com sucesso");
       handleClose();
     }
     return;
