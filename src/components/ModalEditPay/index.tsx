@@ -75,7 +75,7 @@ export default function BasicModalPay(props: IDataService) {
 
     if (!!Rescheck) {
       await ChangeRowDash(data);
-      router.push("/Dashboard");
+      await router.push("/Dashboard");
       handleClose();
     }
   }

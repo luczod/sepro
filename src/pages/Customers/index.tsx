@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import router from "next/router";
 import axios from "axios";
 import { Tooltip } from "@mui/material";
-import { useQuery } from "react-query";
 import { formatCPF } from "../../utils/formatNumber";
 import { Alignment } from "react-data-table-component";
 import { AxiosError } from "axios";
@@ -124,21 +123,27 @@ export const loadTableNome = async (textinput: IDataCustomers[] | null) => {
   return;
 };
 
+export const loadTableCache = async (textinput: IDataCustomers[] | null) => {
+  if (dataTable.length > 0) {
+    console.log(dataTable);
+    console.log(dataTable.length);
+  }
+  dataTable = textinput;
+
+  return;
+};
+
 export const ChangeRowCustom = async (obj: IDataCustomers) => {
   const { idclientes, ...rest } = obj;
   const newObj = cleanObj({ ...rest });
   const index = dataTable.findIndex((object) => {
     return Number(object.idclientes) === Number(idclientes);
   });
-  dataTable[index] = { ...dataTable[index], ...newObj };
-  console.log(newObj);
-  console.log(dataTable[index]);
-
-  console.log(dataTable[index].cdpass);
-
-  // dataTable[service_id].received = newObj.received;
-  // dataTable[index].andamentodesc = desc;
-  return;
+  const copydataTable = JSON.parse(
+    JSON.stringify(dataTable)
+  ) as typeof dataTable;
+  copydataTable[index] = { ...copydataTable[index], ...newObj };
+  return copydataTable;
 };
 
 const downloadExcel = () => {
@@ -146,10 +151,10 @@ const downloadExcel = () => {
 };
 
 export default function PageCustomers() {
-  const dataTableFilter = dataTable;
   useEffect(() => {
     listAll();
   }, []);
+
   return (
     <>
       <Head>

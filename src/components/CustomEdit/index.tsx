@@ -17,8 +17,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { IDataCustomers } from "../../utils/interfaces";
 import { ContainerLabel, styleBox } from "./styles";
 import { fnRawCPF } from "../../utils/formatNumber";
-import { ChangeRowCustom } from "../../pages/Customers";
-import { useRouter } from "next/router";
+import {
+  ChangeRowCustom,
+  loadTableCache,
+  loadTableNome,
+} from "../../pages/Customers";
+import Router, { useRouter } from "next/router";
 
 type VarError = {
   Error?: string;
@@ -60,10 +64,12 @@ export default function BasicModalEdit(props: IDataCustomers) {
     let Rescheck = true;
 
     if (!!Rescheck) {
-      await ChangeRowCustom(data);
+      const newTable = await ChangeRowCustom(data);
+      loadTableNome(newTable);
       router.push("/Customers");
       handleClose();
     }
+    return;
   }
 
   return (
