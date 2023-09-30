@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import Modal from "@mui/material/Modal";
 import InputMask from "react-input-mask";
-import Router from "next/router";
 import axios, { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { ErrorRequest, SucessRequest } from "../../utils/MsgFlash";
@@ -18,6 +17,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { IDataCustomers } from "../../utils/interfaces";
 import { ContainerLabel, styleBox } from "./styles";
 import { fnRawCPF } from "../../utils/formatNumber";
+import { ChangeRowCustom } from "../../pages/Customers";
+import { useRouter } from "next/router";
 
 type VarError = {
   Error?: string;
@@ -46,6 +47,7 @@ export default function BasicModalEdit(props: IDataCustomers) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const router = useRouter();
   const { register, handleSubmit } = useForm();
 
   async function UpdateUser(data: IDataCustomers) {
@@ -54,12 +56,13 @@ export default function BasicModalEdit(props: IDataCustomers) {
       data.cpf = cpfRaw;
     }
 
-    let Rescheck = await EditCustom(data);
+    // let Rescheck = await EditCustom(data);
+    let Rescheck = true;
 
     if (!!Rescheck) {
-      await Router.push("/Customers");
+      await ChangeRowCustom(data);
       handleClose();
-      SucessRequest(props.name + " Foi editado com Sucesso");
+      SucessRequest(" Foi editado com Sucesso");
     }
   }
 

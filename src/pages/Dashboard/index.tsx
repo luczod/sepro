@@ -37,6 +37,7 @@ import ModalEdit from "../../components/ModalEditService";
 import ModalPay from "../../components/ModalEditPay";
 import AddService from "../../components/ModalAddSercice";
 import { handleDownloadExcel } from "../../components/DownExcel";
+import { cleanObj } from "../../utils/cleanObj";
 
 const columnsTop = [
   {
@@ -148,7 +149,6 @@ export const listAllService = async () => {
   dataTable = await loadTableService();
 
   dataReport = await loadReports();
-  console.log(dataReport);
 
   if (!dataTable) {
     console.log(dataTable);
@@ -178,6 +178,19 @@ export const loadTableNome = async (textinput: IDataService[] | null) => {
     dataTable.length = 0;
   }
   dataTable = textinput;
+  return;
+};
+
+export const ChangeRowDash = async (obj: IDataService) => {
+  const { service_id, ...rest } = obj;
+  const newObj = cleanObj({ ...rest });
+  const index = dataTable.findIndex((object) => {
+    return Number(object.service_id) === Number(service_id);
+  });
+  dataTable[index] = { ...dataTable[index], ...newObj };
+
+  // dataTable[service_id].received = newObj.received;
+  // dataTable[index].andamentodesc = desc;
   return;
 };
 

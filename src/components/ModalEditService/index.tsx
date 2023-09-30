@@ -24,6 +24,7 @@ import { IDataService } from "../../utils/interfaces";
 import { ContainerLabel, Boxstyle } from "./styles";
 import BasicModalAdd from "../CustomAdd";
 import { useRouter } from "next/router";
+import { ChangeRowDash } from "../../pages/Dashboard";
 
 type VarError = {
   Error?: string;
@@ -100,6 +101,7 @@ export default function BasicModalService(props: IDataService) {
   const [filteredOptions, setFilteredOptions] =
     React.useState<Option[]>(listData);
   const [showDropdown, setShowDropdown] = React.useState(false);
+  const router = useRouter();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -155,6 +157,8 @@ export default function BasicModalService(props: IDataService) {
 
     let Rescheck = await EditService(data);
     if (!!Rescheck) {
+      await ChangeRowDash(data);
+      router.push("/Dashboard");
       handleClose();
     }
   }

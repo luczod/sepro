@@ -25,6 +25,7 @@ import ModalDelete from "../../components/CustomDel";
 import ModalAdd from "../../components/CustomAdd";
 import ModalSepro from "../../components/CustomSepro";
 import ModalInMass from "../../components/CustomInMass";
+import { cleanObj } from "../../utils/cleanObj";
 
 // toLocaleTimeString("pt-BR");
 const columnsTop = [
@@ -117,6 +118,20 @@ export const listAll = async () => {
 
 export const loadTableNome = async (textinput: IDataCustomers[] | null) => {
   dataTable = textinput;
+  return;
+};
+
+export const ChangeRowCustom = async (obj: IDataCustomers) => {
+  const { idclientes, ...rest } = obj;
+  const newObj = cleanObj({ ...rest });
+  const index = dataTable.findIndex((object) => {
+    return Number(object.idclientes) === Number(idclientes);
+  });
+  dataTable[index] = { ...dataTable[index], ...newObj };
+  console.log(dataTable[index].cdpass);
+  router.push("/Customers");
+  // dataTable[service_id].received = newObj.received;
+  // dataTable[index].andamentodesc = desc;
   return;
 };
 

@@ -17,17 +17,6 @@ type VarError = {
   Error?: string;
 };
 
-const listAcc = [
-  {
-    cd: 1,
-    nome: "ECAC",
-  },
-  {
-    cd: 2,
-    nome: "GOV",
-  },
-];
-
 //iterfaces
 import { ContainerLabel, Boxstyle } from "./styles";
 import { IDataCustomers } from "../../utils/interfaces";
@@ -60,7 +49,7 @@ export default function BasicModalAdd() {
   const handleClose = () => setOpen(false);
   const { register, handleSubmit } = useForm();
 
-  async function UpdateUser(data: IDataCustomers) {
+  async function AddUser(data: IDataCustomers) {
     if (data.cpf) {
       const cpfRaw = fnRawCPF(data.cpf);
       data.cpf = cpfRaw;
@@ -86,7 +75,7 @@ export default function BasicModalAdd() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={Boxstyle}>
-          <form onSubmit={handleSubmit(UpdateUser)}>
+          <form onSubmit={handleSubmit(AddUser)}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Adcionar um novo cliente&nbsp;
               <FaAddressBook color="#1976D2" style={{ fontSize: "2.5vh" }} />
@@ -137,10 +126,9 @@ export default function BasicModalAdd() {
                   <label role="label">
                     <span>Data de nascimento</span>
                     <div className="input-group">
-                      <InputMask
+                      <input
                         {...register("birthdate")}
-                        mask="99/99/9999"
-                        type="search"
+                        type="date"
                         className="form-control"
                         name="birthdate"
                         placeholder="Data de nascimento"

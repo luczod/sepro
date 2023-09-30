@@ -19,6 +19,8 @@ import { Boxstyle } from "./styles";
 //iterfaces
 import { IDataService } from "../../utils/interfaces";
 import { ContainerLabel } from "./styles";
+import { useRouter } from "next/router";
+import { ChangeRowDash } from "../../pages/Dashboard";
 type VarError = {
   Error?: string;
 };
@@ -48,6 +50,7 @@ export default function BasicModalPay(props: IDataService) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const router = useRouter();
   const { register, handleSubmit } = useForm();
 
   async function UpdateService(data: IDataService) {
@@ -67,10 +70,12 @@ export default function BasicModalPay(props: IDataService) {
     if (data.date_received === ISODateSmall(props.date_received)) {
       data.date_received = "";
     }
-    console.log(data);
 
     let Rescheck = await EditService(data);
+
     if (!!Rescheck) {
+      await ChangeRowDash(data);
+      router.push("/Dashboard");
       handleClose();
     }
   }
@@ -147,7 +152,7 @@ export default function BasicModalPay(props: IDataService) {
                         type="search"
                         className="form-control"
                         name="charged"
-                        defaultValue={props.charged}
+                        placeholder={props.charged}
                       />
                     </div>
                   </label>
