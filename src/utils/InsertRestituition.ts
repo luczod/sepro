@@ -17,9 +17,9 @@ export default async function InsertIR(dataSepro: IRestituition) {
       cpf,
       auth,
       dataRegistro,
-      RsaToSting(dados[i].codigo),
-      RsaToSting(dados[i].texto),
-      RsaToSting(dados[i].valor),
+      await RsaToSting(dados[i].codigo),
+      await RsaToSting(dados[i].texto),
+      await RsaToSting(dados[i].valor),
     ]);
     console.log(getDateLog() + result);
   }

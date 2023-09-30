@@ -110,9 +110,9 @@ export default function BasicModalSepro(props: IDataCustomers) {
       if (DataSepro) {
         const dadosDecrypt = DataSepro;
         for (let i in dadosDecrypt) {
-          dados[i].codigo = RsaToSting(dados[i].codigo);
-          dados[i].texto = RsaToSting(dados[i].texto);
-          dados[i].valor = RsaToSting(dados[i].valor);
+          dados[i].codigo = await RsaToSting(dados[i].codigo);
+          dados[i].texto = await RsaToSting(dados[i].texto);
+          dados[i].valor = await RsaToSting(dados[i].valor);
         }
 
         setLoading(false);
