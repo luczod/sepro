@@ -8,7 +8,7 @@ export function ErrorRequest(mensagem: string) {
 
 export function SucessRequest(mensagem: string) {
   toast.success(mensagem, {
-    position: toast.POSITION.TOP_CENTER,
+    position: toast.POSITION.TOP_RIGHT,
   });
 }
 
