@@ -67,18 +67,17 @@ const searchToken = async (valueCPF: string) => {
       return resposta.data.token;
     })
     .catch((err: AxiosError) => {
-      console.log(err);
-
+      console.log(getDateLog() + err.message);
       let varErr: VarError = err?.response?.data || err.cause;
       let StatusErr = err.response?.status || "500";
-      console.log(getDateLog() + "ROW AQUI" + err.message);
-
-      ErrorRequest(err.message);
-      return false;
-      /* } else {
-        ErrorRequest(varErr?.Erro || JSON.stringify(varErr));
+      console.log(getDateLog() + " 74", varErr);
+      if (err.message === "Unauthorized") {
+        ErrorRequest("Sessão encerrada");
         return false;
-      } */
+      } else {
+        ErrorRequest(StatusErr + ":" + JSON.stringify(varErr));
+        return false;
+      }
     });
   return queryAuth;
 };
