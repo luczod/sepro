@@ -29,7 +29,6 @@ export default async function handler(req: Request, res: Response) {
       RsaInArray(ObjResposta.dados).then((dados) => {
         res.status(200).json(dados);
       });
-      // console.log(resposta.config);
     })
     .catch((err: AxiosError) => {
       console.log(getDateLog() + err.response?.status || err.cause);
