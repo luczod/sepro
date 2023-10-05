@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import Modal from "@mui/material/Modal";
 import InputMask from "react-input-mask";
+import { Input } from "../HtmlBox/Input";
 import axios, { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { ErrorRequest, SucessRequest } from "../../utils/MsgFlash";
@@ -91,7 +92,7 @@ export default function BasicModalEdit(props: IDataCustomers) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={styleBox}>
-          <form onSubmit={handleSubmit(UpdateUser)}>
+          <form onSubmit={handleSubmit((data) => console.log(data))}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Editar Cliente&nbsp;
               <FaPen size={18} color="blue" /> -&nbsp;
@@ -116,7 +117,7 @@ export default function BasicModalEdit(props: IDataCustomers) {
                       Nome
                     </span>
                     <div className="input-group">
-                      <input
+                      <Input
                         {...register("name")}
                         type="search"
                         className="form-control"

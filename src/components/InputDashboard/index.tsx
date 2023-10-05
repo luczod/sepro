@@ -13,7 +13,7 @@ import { listAllService } from "../../pages/Dashboard";
 
 //styles
 import { Header } from "./styles";
-import { Input, ScrollBarBox } from "./styles";
+import { InputStyle, ScrollBarBox } from "./styles";
 
 //tipagem
 import { IListYear, IDataService, IReports } from "../../utils/interfaces";
@@ -153,7 +153,7 @@ export default function SubHeader({ listYear }: IProps) {
     <>
       <Header>
         <form onSubmit={handleSubmit(SearchNome)}>
-          <Input>
+          <InputStyle>
             <label role="label">
               <span
                 style={{ display: "block", width: "50px", fontWeight: "bold" }}
@@ -185,11 +185,11 @@ export default function SubHeader({ listYear }: IProps) {
                 </span>
               )}
             </button>
-          </Input>
+          </InputStyle>
         </form>
 
         <form onSubmit={handleSubmit(SearchYear)}>
-          <Input>
+          <InputStyle>
             <label role="label">
               <span
                 style={{
@@ -237,7 +237,7 @@ export default function SubHeader({ listYear }: IProps) {
                 </span>
               )}
             </button>
-          </Input>
+          </InputStyle>
         </form>
       </Header>
       <ToastContainer style={{ fontSize: 18 }} />

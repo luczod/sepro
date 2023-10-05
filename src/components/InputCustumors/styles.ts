@@ -7,7 +7,7 @@ export const Header = styled.header`
   gap: 50px;
 `;
 
-export const Input = styled.div`
+export const InputStyle = styled.div`
   > label {
     > input {
       background-color: white;

@@ -14,7 +14,7 @@ import { listAll } from "../../pages/Customers";
 
 //styles
 import { Header } from "./styles";
-import { Input } from "./styles";
+import { InputStyle } from "./styles";
 
 //tipagem
 import { IDataCustomers } from "../../utils/interfaces";
@@ -88,7 +88,7 @@ export default function SubHeaderCustom() {
     <>
       <Header>
         <form onSubmit={handleSubmit(SearchNome)}>
-          <Input>
+          <InputStyle>
             <label role="label">
               <span
                 style={{ display: "block", width: "8rem", fontWeight: "bold" }}
@@ -120,7 +120,7 @@ export default function SubHeaderCustom() {
                 </span>
               )}
             </button>
-          </Input>
+          </InputStyle>
         </form>
       </Header>
       <ToastContainer style={{ fontSize: 18 }} />
