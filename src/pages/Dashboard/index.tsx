@@ -285,7 +285,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     .then((result) => {
       return result.data;
     })
-    .catch((err) => {
+    .catch((err: AxiosError) => {
       let varErr: VarError = err.response?.data || err.cause;
       if (err.message === "Unauthorized") {
         msg = "Sessão encerrada";
@@ -301,7 +301,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     .then((result) => {
       return result.data;
     })
-    .catch((err) => {
+    .catch((err: AxiosError) => {
       let varErr: VarError = err.response?.data || err.cause;
       if (err.message === "Unauthorized") {
         msg2 = "Sessão encerrada";

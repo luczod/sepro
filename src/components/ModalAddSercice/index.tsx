@@ -25,6 +25,7 @@ import { ErrorRequest, SucessRequest } from "../../utils/MsgFlash";
 import { ISODateSmall } from "../../utils/sortDate";
 import { fnISOnumber } from "../../utils/formtMonet";
 import BasicModalAdd from "../CustomAdd";
+
 type VarError = {
   Error?: string;
 };
@@ -171,7 +172,7 @@ export default function BasicModalAddService() {
   return (
     <div>
       <Tooltip title="Adcionar cliente" style={{ fontSize: "2.5vh" }}>
-        <Button onClick={handleOpen}>
+        <Button onClick={openInvisibily}>
           <FaAddressBook color="Green" />
         </Button>
       </Tooltip>
@@ -180,6 +181,7 @@ export default function BasicModalAddService() {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        style={{ visibility: show ? "visible" : "hidden" }}
       >
         <Box sx={Boxstyle}>
           <form onSubmit={handleSubmit(InsertService)}>
