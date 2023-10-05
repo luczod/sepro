@@ -92,7 +92,7 @@ export default function BasicModalEdit(props: IDataCustomers) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={styleBox}>
-          <form onSubmit={handleSubmit((data) => console.log(data))}>
+          <form onSubmit={handleSubmit(UpdateUser)}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Editar Cliente&nbsp;
               <FaPen size={18} color="blue" /> -&nbsp;
