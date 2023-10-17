@@ -10,7 +10,7 @@ export default async function handler(
                     (SELECT count(s.service_id) FROM services s
                     WHERE s.received IS NULL) AS pendentes,
                     (SELECT sum(s.charged) FROM services s
-                    WHERE s.received IS NULL) AS totalPen
+                    WHERE s.received IS NULL OR s.received <= 0) AS totalPen
                     FROM services s
                     WHERE s.received IS NOT NULL;`;
   const result = await runQuery(SQLquery, []);

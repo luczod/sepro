@@ -10,7 +10,7 @@ export default async function handler(
                     (SELECT count(s.service_id) FROM services s
                     WHERE s.received IS NULL AND s.onlyyear = ${ano}) AS pendentes,
                     (SELECT sum(s.charged) FROM services s
-                    WHERE s.received IS NULL AND s.onlyyear = ${ano}) AS totalPen,
+                    WHERE s.onlyyear = ${ano} AND s.received IS NULL OR s.received <= 0 ) AS totalPen,
                     s.onlyyear  as ano
                     FROM services s
                     WHERE s.received IS NOT NULL 

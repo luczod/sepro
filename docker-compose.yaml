@@ -1,0 +1,21 @@
+# docker-compose up -d
+# docker-compose up -d --remove-orphans
+# docker network connect "network" "container"
+# host.docker.internal win or mac
+# 192.168.x.x linux
+version: "3"
+services:
+  nexjs_app:
+    container_name: nexjs_app
+    hostname: nexjs_app
+    image: next_img
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      TZ: America/Sao_Paulo
+    networks:
+      - curso_graphql_default
+networks:
+  curso_graphql_default:
+    external: true

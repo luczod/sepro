@@ -148,7 +148,6 @@ export default function BasicModalAddService() {
 
   async function InsertService(data: IDataService) {
     if (!inputValueID) {
-      ErrorRequest("Escolha um cliente");
       return null;
     }
     data.cliente_id = String(inputValueID);
@@ -334,7 +333,8 @@ export default function BasicModalAddService() {
             <hr />
             <br />
             <Button
-              className="btn btn-primary"
+              className="btn btn-outline-primary"
+              disabled={!show}
               type="submit"
               sx={{
                 position: "absolute",
