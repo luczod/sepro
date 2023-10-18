@@ -97,7 +97,7 @@ export default function SubHeader({ listYear }: IProps) {
 
   async function SearchNome(data: { Nome: string }) {
     setLoadbtn1(true);
-    console.log(data);
+    console.log(data.Nome);
 
     if (data.Nome === "") {
       await listAllService();
