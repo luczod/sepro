@@ -97,7 +97,7 @@ export default function SubHeader({ listYear }: IProps) {
 
   async function SearchNome(data: { Nome: string }) {
     setLoadbtn1(true);
-    console.log("SearchNome");
+    console.log(data);
 
     if (data.Nome === "") {
       await listAllService();
@@ -119,7 +119,7 @@ export default function SubHeader({ listYear }: IProps) {
       // console.log("resDb ", ResDb[0]);
       loadTableNome(ResDb);
       setLoadbtn1(false);
-      router.prefetch("/Dashboard");
+      router.push("/Dashboard");
     }
     return;
   }
