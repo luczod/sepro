@@ -25,6 +25,7 @@ import { ErrorRequest, SucessRequest } from "../../utils/MsgFlash";
 import { ISODateSmall } from "../../utils/sortDate";
 import { fnISOnumber } from "../../utils/formtMonet";
 import BasicModalAdd from "../CustomAdd";
+import { listAllService } from "../../pages/Dashboard";
 
 type VarError = {
   Error?: string;
@@ -171,6 +172,7 @@ export default function BasicModalAddService() {
 
     let Rescheck = await AddService(data);
     if (!!Rescheck) {
+      await listAllService();
       handleClose();
     }
   }
