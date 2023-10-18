@@ -24,7 +24,12 @@ import { IDataService } from "../../utils/interfaces";
 import { ContainerLabel, Boxstyle } from "./styles";
 import BasicModalAdd from "../CustomAdd";
 import { useRouter } from "next/router";
-import { ChangeRowDash } from "../../pages/Dashboard";
+import {
+  ChangeRowDash,
+  listAllService,
+  listChangeService,
+} from "../../pages/Dashboard";
+import { cleanObj } from "../../utils/cleanObj";
 
 type VarError = {
   Error?: string;
@@ -44,14 +49,13 @@ const NoOptions = [
   },
 ];
 
-async function EditService(objInput: { name: string }) {
+async function EditService(objInput: IDataService) {
   console.log(objInput);
 
   let queryService = await axios
     .post("/api/database/EditService", objInput)
     .then((resposta) => {
       // console.log(resposta);
-      SucessRequest(objInput?.name + " Foi editado com Sucesso");
       return true;
     })
     .catch((err: AxiosError) => {
@@ -66,13 +70,13 @@ async function EditService(objInput: { name: string }) {
 
 async function ListAllCustomers() {
   let queryList = await axios
-    .get("http://localhost:3000/api/database/ListCustomers")
+    .get("api/database/ListCustomers")
     .then((resposta) => {
       return resposta.data;
     })
     .catch((err: AxiosError) => {
-      let msg: VarError = err.response.data;
-      ErrorRequest(msg.Error || JSON.stringify(err.cause));
+      let msg: VarError = err.response?.data;
+      ErrorRequest(msg?.Error || JSON.stringify(err.cause));
 
       return null;
     });
@@ -96,7 +100,7 @@ export default function BasicModalService(props: IDataService) {
   const { register, handleSubmit } = useForm();
 
   // autocompleteInpute
-  const [inputValue, setInputValue] = React.useState("");
+  const [inputValue, setInputValue] = React.useState(props.name);
   const [inputValueID, setInputValueID] = React.useState<number | null>();
   const [filteredOptions, setFilteredOptions] =
     React.useState<Option[]>(listData);
@@ -132,19 +136,29 @@ export default function BasicModalService(props: IDataService) {
 
   React.useEffect(() => {
     setList(listData);
-  }, []);
+    getAllList();
+    if (open === false) {
+      setShowDropdown(false);
+    }
+  }, [open, show]);
 
   function openInvisibily() {
-    setShow(true);
+    if (show === false) {
+      setShowDropdown(false);
+    }
     if (!open) {
       handleClose();
       handleOpen();
     }
+    setShow(true);
   }
 
   async function UpdateService(data: IDataService) {
-    if (inputValueID) {
+    console.log(data);
+
+    if (inputValueID && inputValue !== props.name) {
       data.cliente_id = String(inputValueID);
+      console.log(inputValue);
     }
 
     if (data.date_send === ISODateSmall(props.date_send)) {
@@ -154,14 +168,22 @@ export default function BasicModalService(props: IDataService) {
     if (data.date_received === ISODateSmall(props.date_received)) {
       data.date_received = "";
     }
+    data = cleanObj(data);
+
+    if (Object.values(data).length <= 1) {
+      console.log(data);
+      return null;
+    }
 
     let Rescheck = await EditService(data);
     // let Rescheck = true;
 
     if (!!Rescheck) {
       await ChangeRowDash(data);
+      await listChangeService();
       router.push("/Dashboard");
       handleClose();
+      SucessRequest(props.name + " Foi editado com Sucesso");
     }
   }
 
@@ -243,6 +265,7 @@ export default function BasicModalService(props: IDataService) {
                           value={inputValue}
                           onChange={handleInputChange}
                           className="form-control"
+                          required
                           placeholder="Digite o nome do cliente..."
                         />
                       </DivInput>
@@ -281,7 +304,7 @@ export default function BasicModalService(props: IDataService) {
                         type="text"
                         className="form-control"
                         name="onlyyear"
-                        size={2}
+                        size={3}
                         placeholder={props.onlyyear}
                       />
                     </div>

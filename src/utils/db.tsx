@@ -30,6 +30,8 @@ export const runQuery = async (
     const [results, fields] = await promisePool.query(query, values);
     return results as any[];
   } catch (error) {
+    console.log(query);
+    console.log(values);
     console.error(getDateLog() + error);
     return error.code;
   }

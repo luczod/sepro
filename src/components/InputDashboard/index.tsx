@@ -47,7 +47,7 @@ async function loadTable(nameinput: string, filed: string) {
   return queryServices;
 }
 
-async function FilterYear(yearinput: string) {
+export async function FilterYear(yearinput: string) {
   let queryServices = await axios
     .post("/api/database/GetYear", { ano: yearinput })
     .then((resposta) => {
@@ -63,7 +63,7 @@ async function FilterYear(yearinput: string) {
   return queryServices;
 }
 
-async function FilterReports(yearinput: string) {
+export async function FilterReports(yearinput: string) {
   let queryReports = await axios
     .post("api/database/reports/local", { ano: yearinput })
     .then((resposta) => {
@@ -119,14 +119,14 @@ export default function SubHeader({ listYear }: IProps) {
       // console.log("resDb ", ResDb[0]);
       loadTableNome(ResDb);
       setLoadbtn1(false);
-      router.push("/Dashboard");
+      router.prefetch("/Dashboard");
     }
     return;
   }
 
   async function SearchYear(data: { ano: string }) {
     setLoadbtn2(true);
-    console.log("SearchYear");
+    console.log(data.ano);
 
     ResDb = await FilterYear(data.ano);
     ResReports = await FilterReports(data.ano);
@@ -145,6 +145,7 @@ export default function SubHeader({ listYear }: IProps) {
       loadcardBox(ResReports);
     }
     setLoadbtn2(false);
+
     router.push("/Dashboard");
     return;
   }

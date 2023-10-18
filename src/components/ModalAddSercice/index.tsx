@@ -67,13 +67,13 @@ async function AddService(objInput: IDataService) {
 
 async function ListAllCustomers() {
   let queryList = await axios
-    .get("http://localhost:3000/api/database/ListCustomers")
+    .get("api/database/ListCustomers")
     .then((resposta) => {
       return resposta.data;
     })
     .catch((err: AxiosError) => {
-      let msg: VarError = err.response.data;
-      ErrorRequest(msg.Error || JSON.stringify(err.cause));
+      let msg: VarError = err.response?.data;
+      ErrorRequest(msg?.Error || JSON.stringify(err.cause));
 
       return null;
     });
@@ -132,14 +132,21 @@ export default function BasicModalAddService() {
 
   React.useEffect(() => {
     setList(listData);
-  }, []);
+    getAllList();
+    if (open === false) {
+      setShowDropdown(false);
+    }
+  }, [open, show]);
 
   function openInvisibily() {
-    setShow(true);
+    if (show === false) {
+      setShowDropdown(false);
+    }
     if (!open) {
       handleClose();
       handleOpen();
     }
+    setShow(true);
   }
 
   function handlerVisibility() {

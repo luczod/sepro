@@ -146,6 +146,22 @@ export const ChangeRowCustom = async (obj: IDataCustomers) => {
   return copydataTable;
 };
 
+export const deleteRowCustom = async (obj: IDataCustomers) => {
+  const { idclientes, ...rest } = obj;
+  const index = dataTable.findIndex((object) => {
+    return Number(object.idclientes) === Number(idclientes);
+  });
+  console.log(index);
+
+  const copydataTable = JSON.parse(
+    JSON.stringify(dataTable)
+  ) as typeof dataTable;
+  delete copydataTable[index];
+  console.log(copydataTable);
+
+  return copydataTable;
+};
+
 const downloadExcel = () => {
   handleDownloadExcel(dataTable, "planilha1", "clientes");
 };

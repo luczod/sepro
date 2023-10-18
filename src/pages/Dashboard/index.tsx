@@ -30,7 +30,7 @@ let dataTable: IDataService[] | null = null;
 let dataReport: IReports | null = null;
 
 //compoennts
-import SubHeader from "../../components/InputDashboard";
+import SubHeader, { FilterYear } from "../../components/InputDashboard";
 import DataTableBase from "../../components/DataTableBox";
 import CardBox from "../../components/CardBox";
 import ModalEdit from "../../components/ModalEditService";
@@ -127,7 +127,7 @@ export async function loadTableService() {
 
 export async function loadReports() {
   const currentyDate = new Date();
-  let year = currentyDate.getFullYear();
+  let year = !dataReport ? currentyDate.getFullYear() : dataReport.ano;
 
   let queryService = await axios
     .post("/api/database/reports/local", {
@@ -159,6 +159,30 @@ export const listAllService = async () => {
     console.log(dataReport);
     return;
   }
+  console.log("run");
+
+  router.push("/Dashboard");
+  return;
+};
+
+export const listChangeService = async () => {
+  dataTable = !dataReport.ano
+    ? await loadTableService()
+    : await FilterYear(String(dataReport.ano));
+
+  dataReport = await loadReports();
+
+  if (!dataTable) {
+    console.log(dataTable);
+    return;
+  }
+
+  if (!dataReport) {
+    console.log(dataReport);
+    return;
+  }
+  console.log("run");
+
   router.push("/Dashboard");
   return;
 };
@@ -302,7 +326,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       return result.data;
     })
     .catch((err: AxiosError) => {
-      let varErr: VarError = err.response?.data || err.cause;
+      let varErr: VarError = (err && err.response?.data) || err.cause;
       if (err.message === "Unauthorized") {
         msg2 = "Sessão encerrada";
         return null;

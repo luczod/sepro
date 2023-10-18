@@ -6,7 +6,7 @@ import Modal from "@mui/material/Modal";
 import Tooltip from "@mui/material/Tooltip";
 import axios, { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { FaTrash } from "react-icons/fa6";
 import { Boxstyle } from "./styles";
 
@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 //iterfaces
 import { IDataCustomers } from "../../utils/interfaces";
 import { ErrorRequest, SucessRequest } from "../../utils/MsgFlash";
+import { deleteRowCustom, loadTableNome } from "../../pages/Customers";
 type VarError = {
   Error?: string;
 };
@@ -46,11 +47,16 @@ export default function BasicModalDelete(props: IDataCustomers) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const router = useRouter();
   const { register, handleSubmit } = useForm();
 
-  async function DeleteUser(data) {
+  async function DeleteUser(data: IDataCustomers) {
     let Rescheck = await DeleteCustom(data);
     if (!!Rescheck) {
+      const newTable = await deleteRowCustom(props);
+      console.log(props.idclientes);
+      loadTableNome(newTable);
+      router.push("/Customers");
       handleClose();
     }
   }

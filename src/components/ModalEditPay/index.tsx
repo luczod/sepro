@@ -20,7 +20,12 @@ import { Boxstyle } from "./styles";
 import { IDataService } from "../../utils/interfaces";
 import { ContainerLabel } from "./styles";
 import { useRouter } from "next/router";
-import { ChangeRowDash } from "../../pages/Dashboard";
+import {
+  ChangeRowDash,
+  listAllService,
+  listChangeService,
+} from "../../pages/Dashboard";
+import { cleanObj } from "../../utils/cleanObj";
 type VarError = {
   Error?: string;
 };
@@ -70,12 +75,20 @@ export default function BasicModalPay(props: IDataService) {
     if (data.date_received === ISODateSmall(props.date_received)) {
       data.date_received = "";
     }
+    data = cleanObj(data);
+    console.log(data);
+
+    if (Object.values(data).length <= 2) {
+      console.log(data);
+      return null;
+    }
 
     let Rescheck = await EditService(data);
 
     if (!!Rescheck) {
       await ChangeRowDash(data);
-      await router.push("/Dashboard");
+      // await router.push("/Dashboard");
+      await listChangeService();
       handleClose();
     }
   }

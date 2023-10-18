@@ -8,7 +8,7 @@ export default async function handler(
   const ano = req.body.ano;
   const SQLquery = `SELECT sum(s.received) AS totalRec, count(s.received) AS pagos,
                     (SELECT count(s.service_id) FROM services s
-                    WHERE s.received IS NULL AND s.onlyyear = ${ano}) AS pendentes,
+                    WHERE s.onlyyear = ${ano} AND s.received IS NULL OR s.received <= 0) AS pendentes,
                     (SELECT sum(s.charged) FROM services s
                     WHERE s.onlyyear = ${ano} AND s.received IS NULL OR s.received <= 0 ) AS totalPen,
                     s.onlyyear  as ano
