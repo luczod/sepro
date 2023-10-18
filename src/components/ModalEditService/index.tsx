@@ -97,7 +97,7 @@ export default function BasicModalService(props: IDataService) {
   const [list, setList] = React.useState<null | any[]>(listData);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { register, handleSubmit } = useForm();
+  const { register, reset, handleSubmit } = useForm();
 
   // autocompleteInpute
   const [inputValue, setInputValue] = React.useState(props.name);
@@ -146,6 +146,7 @@ export default function BasicModalService(props: IDataService) {
     if (show === false) {
       setShowDropdown(false);
     }
+    setInputValue(props.name);
     if (!open) {
       handleClose();
       handleOpen();
@@ -155,6 +156,7 @@ export default function BasicModalService(props: IDataService) {
 
   async function UpdateService(data: IDataService) {
     console.log(data);
+    console.log(props.name);
 
     if (inputValueID && inputValue !== props.name) {
       data.cliente_id = String(inputValueID);
@@ -185,6 +187,7 @@ export default function BasicModalService(props: IDataService) {
       handleClose();
       SucessRequest(props.name + " Foi editado com Sucesso");
     }
+    reset();
   }
 
   function handlerVisibility() {
@@ -241,13 +244,6 @@ export default function BasicModalService(props: IDataService) {
                         type="hidden"
                         name="service_id"
                         value={props.service_id}
-                      />
-                      <input
-                        {...register("name")}
-                        type="hidden"
-                        className="form-control"
-                        name="name"
-                        size={48}
                       />
                     </div>
                   </label>

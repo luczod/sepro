@@ -50,8 +50,11 @@ export default function BasicModalDelete(props: IDataCustomers) {
   const router = useRouter();
   const { register, handleSubmit } = useForm();
 
-  async function DeleteUser(data: IDataCustomers) {
+  async function DeleteUser(data: any) {
+    console.log(data.Id, props.idclientes);
+
     let Rescheck = await DeleteCustom(data);
+    // let Rescheck = true;
     if (!!Rescheck) {
       const newTable = await deleteRowCustom(props);
       console.log(props.idclientes);

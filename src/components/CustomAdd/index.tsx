@@ -47,7 +47,7 @@ export default function BasicModalAdd() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { register, handleSubmit } = useForm();
+  const { register, reset, handleSubmit } = useForm();
 
   async function AddUser(data: IDataCustomers) {
     if (data.cpf) {
@@ -58,6 +58,7 @@ export default function BasicModalAdd() {
     let Rescheck = await addCustom(data);
     if (!!Rescheck) {
       handleClose();
+      reset();
     }
   }
 

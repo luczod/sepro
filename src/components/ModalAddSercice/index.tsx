@@ -95,7 +95,7 @@ export default function BasicModalAddService() {
   const [list, setList] = React.useState<null | any[]>(listData);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { register, handleSubmit } = useForm();
+  const { register, reset, handleSubmit } = useForm();
 
   // autocompleteInpute
   const [inputValue, setInputValue] = React.useState("");
@@ -143,6 +143,7 @@ export default function BasicModalAddService() {
     if (show === false) {
       setShowDropdown(false);
     }
+
     if (!open) {
       handleClose();
       handleOpen();
@@ -175,6 +176,7 @@ export default function BasicModalAddService() {
       await listAllService();
       handleClose();
     }
+    reset();
   }
 
   return (

@@ -156,7 +156,7 @@ export const deleteRowCustom = async (obj: IDataCustomers) => {
   const copydataTable = JSON.parse(
     JSON.stringify(dataTable)
   ) as typeof dataTable;
-  delete copydataTable[index];
+  copydataTable.splice(index, 1);
   console.log(copydataTable);
 
   return copydataTable;

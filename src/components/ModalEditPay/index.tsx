@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import Tooltip from "@mui/material/Tooltip";
 import axios, { AxiosError } from "axios";
 import { formatCPF } from "../../utils/formatNumber";
+import Backdrop from "@mui/material/Backdrop";
 import { useForm } from "react-hook-form";
 import { ErrorRequest, SucessRequest } from "../../utils/MsgFlash";
 import { FaMoneyCheckDollar } from "react-icons/fa6";
@@ -56,7 +57,7 @@ export default function BasicModalPay(props: IDataService) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const router = useRouter();
-  const { register, handleSubmit } = useForm();
+  const { register, reset, handleSubmit } = useForm();
 
   async function UpdateService(data: IDataService) {
     // checked if has dot and comman
@@ -91,6 +92,7 @@ export default function BasicModalPay(props: IDataService) {
       await listChangeService();
       handleClose();
     }
+    reset();
   }
 
   return (
@@ -109,6 +111,7 @@ export default function BasicModalPay(props: IDataService) {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        slots={{ backdrop: Backdrop }}
       >
         <Box sx={Boxstyle}>
           <form onSubmit={handleSubmit(UpdateService)}>
