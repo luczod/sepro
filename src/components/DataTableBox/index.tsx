@@ -1,5 +1,6 @@
-import React from "react";
+import React, { ChangeEvent, useMemo, useState } from "react";
 import DataTable, { TableProps } from "react-data-table-component";
+import FilterComponent from "./Filterfn";
 
 const paginationOptions = {
   rowsPerPageText: "Registros por página",

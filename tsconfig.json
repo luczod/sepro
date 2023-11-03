@@ -24,5 +24,6 @@
     "src/components/FormButton/index.jsx",
     "teste.js"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "types": ["typePatches"]
 }

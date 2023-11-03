@@ -1,5 +1,5 @@
 require("dotenv").config();
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect } from "react";
 import router from "next/router";
 import axios from "axios";
 import Head from "next/head";
@@ -14,7 +14,7 @@ import { Content } from "../../styles/stylesDashboard";
 import "react-toastify/dist/ReactToastify.css";
 
 //types
-import { IDataService, IListYear, IReports } from "../../utils/interfaces";
+import { IDataService, IReports } from "../../utils/interfaces";
 import {
   convertToDate1,
   convertToDate2,
@@ -109,6 +109,8 @@ const ExpandedComponent = ({ data }) => (
     </p>
   </div>
 );
+
+// serverMSW.listen();
 
 export async function loadTableService() {
   let queryService = await axios

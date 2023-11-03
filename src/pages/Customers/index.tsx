@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import router from "next/router";
 import axios from "axios";
 import { Tooltip } from "@mui/material";
-import { formatCPF } from "../../utils/formatNumber";
+import { fnRawCPF, formatCPF } from "../../utils/formatNumber";
 import { Alignment } from "react-data-table-component";
 import { AxiosError } from "axios";
 import { ISOtoDateBr } from "../../utils/sortDate";
@@ -25,6 +25,7 @@ import ModalAdd from "../../components/CustomAdd";
 import ModalSepro from "../../components/CustomSepro";
 import ModalInMass from "../../components/CustomInMass";
 import { cleanObj } from "../../utils/cleanObj";
+import FilterComponent from "../../components/DataTableBox/Filterfn";
 
 // toLocaleTimeString("pt-BR");
 const columnsTop = [
@@ -170,6 +171,36 @@ export default function PageCustomers() {
   useEffect(() => {
     listAll();
   }, []);
+  const [filterText, setFilterText] = useState<string>("");
+  const [resetPageToggle, setResetPageToggle] = useState<boolean>(false);
+  const filteredItems = dataTable?.filter((item: IDataCustomers) =>
+    Number(fnRawCPF(filterText))
+      ? item.cpf && item.cpf.includes(filterText)
+      : item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
+  );
+
+  const FilterSearch = useMemo(() => {
+    return (
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          flexDirection: "row",
+          paddingTop: "1rem",
+          justifyContent: "space-between",
+        }}
+      >
+        <ModalAdd />
+        <FilterComponent
+          onFilter={(e: ChangeEvent<HTMLInputElement>) =>
+            setFilterText(e.target.value)
+          }
+          filterText={filterText}
+        />
+      </div>
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterText, resetPageToggle]);
 
   return (
     <>
@@ -191,11 +222,11 @@ export default function PageCustomers() {
           </Tooltip>
           <ModalInMass />
           <DataTableBase
-            data={dataTable}
+            data={filteredItems}
             columns={columnsTop}
             subHeader
             subHeaderAlign={Alignment.LEFT}
-            subHeaderComponent={<ModalAdd />}
+            subHeaderComponent={FilterSearch}
             highlightOnHover={true}
             progressPending={!dataTable}
           />
